@@ -26,12 +26,19 @@
         android:text="Blue" />
 
     <Button
-        android:id="@+id/activity_main_cyantv"
+        android:id="@+id/activity_main_purpletv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Cyan" />
+        android:text="Purple" />
+
+    <Button
+        android:id="@+id/activity_main_orangetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Orange" />
 
     <com.haarman.supertoasts.ToolTipFrameLayout
         android:id="@+id/activity_main_tooltipframelayout"

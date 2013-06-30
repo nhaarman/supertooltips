@@ -1,7 +1,6 @@
 package com.haarman.supertooltips;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,7 +13,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     private ToolTipView mRedToolTipView;
     private ToolTipView mGreenToolTipView;
     private ToolTipView mBlueToolTipView;
-    private ToolTipView mCyanToolTipView;
+    private ToolTipView mPurpleToolTipView;
+    private ToolTipView mOrangeToolTipView;
     private ToolTipFrameLayout mToolTipFrameLayout;
 
     @Override
@@ -26,7 +26,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
         findViewById(R.id.activity_main_redtv).setOnClickListener(MainActivity.this);
         findViewById(R.id.activity_main_greentv).setOnClickListener(MainActivity.this);
         findViewById(R.id.activity_main_bluetv).setOnClickListener(MainActivity.this);
-        findViewById(R.id.activity_main_cyantv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_purpletv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_orangetv).setOnClickListener(MainActivity.this);
 
 
         new Handler().postDelayed(new Runnable() {
@@ -35,29 +36,35 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
                 addRedToolTipView();
                 addGreenToolTipView();
                 addBlueToolTipView();
-                addCyanToolTipView();
+                addPurpleToolTipView();
+                addOrangeToolTipView();
             }
         }, 1000);
     }
 
     private void addRedToolTipView() {
-        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(Color.RED), findViewById(R.id.activity_main_redtv));
+        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_red)), findViewById(R.id.activity_main_redtv));
         mRedToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addGreenToolTipView() {
-        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(Color.GREEN), findViewById(R.id.activity_main_greentv));
+        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_green)), findViewById(R.id.activity_main_greentv));
         mGreenToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addBlueToolTipView() {
-        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(Color.BLUE), findViewById(R.id.activity_main_bluetv));
+        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_blue)), findViewById(R.id.activity_main_bluetv));
         mBlueToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
-    private void addCyanToolTipView() {
-        mCyanToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(Color.CYAN), findViewById(R.id.activity_main_cyantv));
-        mCyanToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
+    private void addPurpleToolTipView() {
+        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_purple)), findViewById(R.id.activity_main_purpletv));
+        mPurpleToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
+    }
+
+    private void addOrangeToolTipView() {
+        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_orange)), findViewById(R.id.activity_main_orangetv));
+        mOrangeToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     @Override
@@ -78,9 +85,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
                     addBlueToolTipView();
                 }
                 break;
-            case R.id.activity_main_cyantv:
-                if (mCyanToolTipView == null) {
-                    addCyanToolTipView();
+            case R.id.activity_main_purpletv:
+                if (mPurpleToolTipView == null) {
+                    addPurpleToolTipView();
+                }
+                break;
+            case R.id.activity_main_orangetv:
+                if (mOrangeToolTipView == null) {
+                    addOrangeToolTipView();
                 }
                 break;
         }
@@ -94,8 +106,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
             mGreenToolTipView = null;
         } else if (mBlueToolTipView == toolTipView) {
             mBlueToolTipView = null;
-        } else if (mCyanToolTipView == toolTipView) {
-            mCyanToolTipView = null;
+        } else if (mPurpleToolTipView == toolTipView) {
+            mPurpleToolTipView = null;
+        } else if (mOrangeToolTipView == toolTipView) {
+            mOrangeToolTipView = null;
         }
     }
 }
