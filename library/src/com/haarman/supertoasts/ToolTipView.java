@@ -136,16 +136,19 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     private void applyToolTipPosition() {
-        final int[] screenPosition = new int[2];
+        final int[] masterViewScreenPosition = new int[2];
+        final int[] parentViewScreenPosition = new int[2];
+
         final Rect viewDisplayFrame = new Rect(); // includes decorations (e.g. status bar)
-        mView.getLocationOnScreen(screenPosition);
+        mView.getLocationOnScreen(masterViewScreenPosition);
         mView.getWindowVisibleDisplayFrame(viewDisplayFrame);
+        ((View)getParent()).getLocationOnScreen(parentViewScreenPosition);
 
         final int masterViewWidth = mView.getWidth();
         final int masterViewHeight = mView.getHeight();
 
-        mRelativeMasterViewX = screenPosition[0] - mParentsPaddingLeft;
-        mRelativeMasterViewY = screenPosition[1] - viewDisplayFrame.top - mParentTop - mParentsPaddingTop;
+        mRelativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
+        mRelativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
         final int relativeMasterViewCenterX = mRelativeMasterViewX + masterViewWidth / 2;
 
         float toolTipViewAboveY = mRelativeMasterViewY - getHeight();

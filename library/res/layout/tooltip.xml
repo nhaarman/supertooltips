@@ -6,7 +6,7 @@
         android:id="@+id/tooltip_pointer_up_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bg_tooltip_pointer_down" />
+        android:src="@drawable/bg_tooltip_pointer_up" />
 
     <FrameLayout
         android:id="@+id/tooltip_contentholder"
