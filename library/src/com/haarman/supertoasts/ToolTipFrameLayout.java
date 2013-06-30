@@ -35,11 +35,11 @@ public class ToolTipFrameLayout extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
-    @TargetApi(11)
-    public void showToolTipForView(ToolTip toolTip, final View view) {
+    public ToolTipView showToolTipForView(ToolTip toolTip, final View view) {
         final ToolTipView toolTipView = new ToolTipView(getContext());
         toolTipView.setToolTip(toolTip, view);
         addView(toolTipView);
+        return toolTipView;
     }
 
 }
