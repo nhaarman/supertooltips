@@ -145,6 +145,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         float toolTipViewBelowY = mRelativeMasterViewY + masterViewHeight;
         float toolTipViewY;
         float toolTipViewX = Math.max(0, relativeMasterViewCenterX - getWidth() / 2);
+        if (toolTipViewX + getWidth() > viewDisplayFrame.right) {
+            toolTipViewX = viewDisplayFrame.right - getWidth() + mBgPaddingLeft + mBgPaddingRight;
+        }
+
         setX(toolTipViewX);
         setPointerCenterX(relativeMasterViewCenterX);
 
@@ -227,8 +231,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mContentHolder.addView(view);
     }
 
-    @Override
-    public void onClick(View view) {
+    public void remove() {
         List<Animator> animators = new ArrayList<Animator>();
         if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
             animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
@@ -263,6 +266,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             }
         });
         animatorSet.start();
+    }
+
+    @Override
+    public void onClick(View view) {
+        remove();
 
         if (mListener != null) {
             mListener.onToolTipViewClicked(this);
