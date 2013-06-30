@@ -1,5 +1,7 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="bg_tooltip_padding_top">4dp</dimen>
+    <dimen name="bg_tooltip_padding_left">5dp</dimen>
+    <dimen name="bg_tooltip_padding_right">5dp</dimen>
+    <dimen name="bg_tooltip_padding_bottom">10dp</dimen>
+    <dimen name="bg_tooltip_pointer_padding_bottom">8dp</dimen>
 </resources>
