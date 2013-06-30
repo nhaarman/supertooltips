@@ -19,22 +19,21 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.haarman.supertooltips.R;
 
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
@@ -48,25 +47,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private View mView;
     //
     private boolean mDimensionsKnown;
-    //
-    private int mParentsPaddingTop;
-    private int mParentsPaddingLeft;
-    private int mParentTop;
-    private int mRelativeMasterViewX;
     private int mRelativeMasterViewY;
 
     public ToolTipView(Context context) {
         super(context);
-        init();
-    }
-
-    public ToolTipView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public ToolTipView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
         init();
     }
 
@@ -88,27 +72,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public boolean onPreDraw() {
         getViewTreeObserver().removeOnPreDrawListener(this);
         mDimensionsKnown = true;
-        findPaddings();
-
-        mParentTop = ((ViewGroup) getParent()).getTop();
 
         if (mToolTip != null) {
             applyToolTipPosition();
         }
         return true;
-    }
-
-    private void findPaddings() {
-        mParentsPaddingTop = 0;
-        mParentsPaddingLeft = 0;
-
-        ViewParent parent = getParent();
-        while (parent instanceof ViewGroup) {
-            mParentsPaddingTop += ((ViewGroup) parent).getPaddingTop();
-            mParentsPaddingLeft += ((ViewGroup) parent).getPaddingLeft();
-
-            parent = parent.getParent();
-        }
     }
 
     public void setToolTip(ToolTip toolTip, View view) {
@@ -142,14 +110,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         final Rect viewDisplayFrame = new Rect(); // includes decorations (e.g. status bar)
         mView.getLocationOnScreen(masterViewScreenPosition);
         mView.getWindowVisibleDisplayFrame(viewDisplayFrame);
-        ((View)getParent()).getLocationOnScreen(parentViewScreenPosition);
+        ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
 
         final int masterViewWidth = mView.getWidth();
         final int masterViewHeight = mView.getHeight();
 
-        mRelativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
+        final int relativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
         mRelativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
-        final int relativeMasterViewCenterX = mRelativeMasterViewX + masterViewWidth / 2;
+        final int relativeMasterViewCenterX = relativeMasterViewX + masterViewWidth / 2;
 
         float toolTipViewAboveY = mRelativeMasterViewY - getHeight();
         float toolTipViewBelowY = mRelativeMasterViewY + masterViewHeight;
@@ -207,9 +175,24 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         int paddingRight = mToolTipTV.getPaddingRight();
         int paddingTop = mToolTipTV.getPaddingTop();
         int paddingBottom = mToolTipTV.getPaddingBottom();
-        mToolTipTV.setBackgroundDrawable(textViewBackground);
+
+        if (Build.VERSION.SDK_INT > 16) {
+            setToolTipTVBackground(textViewBackground);
+        } else {
+            setToolTipTVBackgroundCompat(textViewBackground);
+        }
 
         mToolTipTV.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+    }
+
+    @TargetApi(16)
+    private void setToolTipTVBackground(Drawable background) {
+        mToolTipTV.setBackground(background);
+    }
+
+    @SuppressWarnings("deprecated")
+    private void setToolTipTVBackgroundCompat(Drawable background) {
+        mToolTipTV.setBackgroundDrawable(background);
     }
 
     private void setContentView(View view) {
