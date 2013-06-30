@@ -19,46 +19,67 @@ import android.view.View;
 
 public class ToolTip {
 
-	private CharSequence text;
-	private int textResId;
-	private int color;
-	private View contentView;
+    public static final int ANIMATIONTYPE_FROMMASTERVIEW = 101;
+    public static final int ANIMATIONTYPE_FROMTOP = 102;
+    //
+    private CharSequence text;
+    private int textResId;
+    private int color;
+    private View contentView;
+    private int animationType;
 
-	public ToolTip withText(CharSequence text) {
-		this.text = text;
-		this.textResId = 0;
-		return this;
-	}
+    public ToolTip() {
+        text = null;
+        textResId = 0;
+        color = 0;
+        contentView = null;
+        animationType = ANIMATIONTYPE_FROMMASTERVIEW;
+    }
 
-	public ToolTip withText(int resId) {
-		this.textResId = resId;
-		this.text = null;
-		return this;
-	}
+    public ToolTip withText(CharSequence text) {
+        this.text = text;
+        this.textResId = 0;
+        return this;
+    }
 
-	public ToolTip withColor(int color) {
-		this.color = color;
-		return this;
-	}
+    public ToolTip withText(int resId) {
+        this.textResId = resId;
+        this.text = null;
+        return this;
+    }
 
-	public ToolTip withConventView(View view) {
-		this.contentView = view;
-		return this;
-	}
+    public ToolTip withColor(int color) {
+        this.color = color;
+        return this;
+    }
 
-	public CharSequence getText() {
-		return text;
-	}
+    public ToolTip withContentView(View view) {
+        this.contentView = view;
+        return this;
+    }
 
-	public int getTextResId() {
-		return textResId;
-	}
+    public ToolTip withAnimationType(int animationType) {
+        this.animationType = animationType;
+        return this;
+    }
 
-	public int getColor() {
-		return color;
-	}
+    public CharSequence getText() {
+        return text;
+    }
 
-	public View getContentView() {
-		return contentView;
-	}
+    public int getTextResId() {
+        return textResId;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public View getContentView() {
+        return contentView;
+    }
+
+    public int getAnimationType() {
+        return animationType;
+    }
 }

@@ -136,8 +136,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             toolTipViewY = toolTipViewAboveY;
         }
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(this, "translationY", mRelativeMasterViewY, toolTipViewY);
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 0, 1);
+        ObjectAnimator translationAnimator = null;
+        if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
+            translationAnimator = ObjectAnimator.ofFloat(this, "translationY", mRelativeMasterViewY, toolTipViewY);
+        } else if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMTOP) {
+            translationAnimator = ObjectAnimator.ofFloat(this, "translationY", 0, toolTipViewY);
+        }
+
+
         ValueAnimator heightAnimator = ValueAnimator.ofInt(0, getHeight());
         heightAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -148,8 +154,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             }
         });
 
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 0, 1);
+
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animator, heightAnimator, alphaAnimator);
+        animatorSet.playTogether(translationAnimator, heightAnimator, alphaAnimator);
         animatorSet.start();
     }
 
@@ -202,7 +210,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     @Override
     public void onClick(View view) {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY);
+        ObjectAnimator translationAnimator;
+        if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
+            translationAnimator = ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY);
+        } else {
+            translationAnimator = ObjectAnimator.ofFloat(this, "translationY", getY(), 0);
+        }
+
         ValueAnimator heightAnimator = ValueAnimator.ofInt(getHeight(), 0);
         heightAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -212,10 +226,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 setLayoutParams(layoutParams);
             }
         });
+
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 1, 0);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animator, heightAnimator, alphaAnimator);
+        animatorSet.playTogether(translationAnimator, heightAnimator, alphaAnimator);
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
