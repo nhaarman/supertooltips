@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     private void addOrangeToolTipView() {
         mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(
                 new ToolTip()
-                        .withText("Yet another one!")
+                        .withText("Tap me!")
                         .withColor(getResources().getColor(R.color.holo_orange)),
                 findViewById(R.id.activity_main_orangetv));
         mOrangeToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
@@ -121,26 +121,41 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
             case R.id.activity_main_redtv:
                 if (mRedToolTipView == null) {
                     addRedToolTipView();
+                } else {
+                    mRedToolTipView.remove();
+                    mRedToolTipView = null;
                 }
                 break;
             case R.id.activity_main_greentv:
                 if (mGreenToolTipView == null) {
                     addGreenToolTipView();
+                } else {
+                    mGreenToolTipView.remove();
+                    mGreenToolTipView = null;
                 }
                 break;
             case R.id.activity_main_bluetv:
                 if (mBlueToolTipView == null) {
                     addBlueToolTipView();
+                } else {
+                    mBlueToolTipView.remove();
+                    mBlueToolTipView = null;
                 }
                 break;
             case R.id.activity_main_purpletv:
                 if (mPurpleToolTipView == null) {
                     addPurpleToolTipView();
+                } else {
+                    mPurpleToolTipView.remove();
+                    mPurpleToolTipView = null;
                 }
                 break;
             case R.id.activity_main_orangetv:
                 if (mOrangeToolTipView == null) {
                     addOrangeToolTipView();
+                } else {
+                    mOrangeToolTipView.remove();
+                    mOrangeToolTipView = null;
                 }
                 break;
         }
