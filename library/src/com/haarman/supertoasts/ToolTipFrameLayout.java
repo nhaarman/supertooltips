@@ -15,7 +15,6 @@
 
 package com.haarman.supertoasts;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -35,6 +34,10 @@ public class ToolTipFrameLayout extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
+    /**
+     * Shows a ToolTipView based on gived ToolTip at the proper location relative to given View.
+     * @return the ToolTipView that was created.
+     */
     public ToolTipView showToolTipForView(ToolTip toolTip, final View view) {
         final ToolTipView toolTipView = new ToolTipView(getContext());
         toolTipView.setToolTip(toolTip, view);

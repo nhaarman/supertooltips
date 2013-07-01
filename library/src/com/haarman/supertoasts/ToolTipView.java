@@ -33,6 +33,9 @@ import com.haarman.supertooltips.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A View to visualize ToolTips. Use ToolTipFrameLayout.showToolTipForView() to show ToolTips.
+ */
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 
     private ImageView mTopPointerView;

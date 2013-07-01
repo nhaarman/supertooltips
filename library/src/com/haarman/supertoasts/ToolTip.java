@@ -29,6 +29,9 @@ public class ToolTip {
     private int animationType;
     private boolean shadow;
 
+    /**
+     * Creates a new ToolTip without any values.
+     */
     public ToolTip() {
         text = null;
         textResId = 0;
@@ -37,33 +40,63 @@ public class ToolTip {
         animationType = ANIMATIONTYPE_FROMMASTERVIEW;
     }
 
+    /**
+     * Set the text to show. Has no effect when a content View is set using setContentView().
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withText(CharSequence text) {
         this.text = text;
         this.textResId = 0;
         return this;
     }
 
+    /**
+     * Set the text resource id to show. Has no effect when a content View is set using setContentView().
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withText(int resId) {
         this.textResId = resId;
         this.text = null;
         return this;
     }
 
+    /**
+     * Set the color of the ToolTop. Default is white.
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withColor(int color) {
         this.color = color;
         return this;
     }
 
+    /**
+     * Set a custom content View for the ToolTip. This will cause any text that has been set to be ignored.
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withContentView(View view) {
         this.contentView = view;
         return this;
     }
 
+    /**
+     * Set the animation type for the ToolTip. One of ANIMATIONTYPE_FROMMASTERVIEW and ANIMATIONTYPE_FROMTOP. Default ANIMATIONTYPE_FROMMASTERVIEW.
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withAnimationType(int animationType) {
         this.animationType = animationType;
         return this;
     }
 
+    /**
+     * Set whether to show a shadow below the ToolTip.
+     *
+     * @return this ToolTip to build upon.
+     */
     public ToolTip withShadow(boolean shadow) {
         this.shadow = shadow;
         return this;
