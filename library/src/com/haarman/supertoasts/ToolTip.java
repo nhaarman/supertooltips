@@ -27,6 +27,7 @@ public class ToolTip {
     private int color;
     private View contentView;
     private int animationType;
+    private boolean shadow;
 
     public ToolTip() {
         text = null;
@@ -63,6 +64,11 @@ public class ToolTip {
         return this;
     }
 
+    public ToolTip withShadow(boolean shadow) {
+        this.shadow = shadow;
+        return this;
+    }
+
     public CharSequence getText() {
         return text;
     }
@@ -81,5 +87,9 @@ public class ToolTip {
 
     public int getAnimationType() {
         return animationType;
+    }
+
+    public boolean getShadow() {
+        return shadow;
     }
 }

@@ -3,6 +3,7 @@ package com.haarman.supertooltips;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import com.haarman.supertoasts.ToolTip;
 import com.haarman.supertoasts.ToolTipFrameLayout;
@@ -34,36 +35,61 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
             @Override
             public void run() {
                 addRedToolTipView();
+            }
+        }, 500);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 addGreenToolTipView();
-                addBlueToolTipView();
-                addPurpleToolTipView();
+            }
+        }, 700);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 addOrangeToolTipView();
             }
-        }, 1000);
+        }, 900);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                addBlueToolTipView();
+            }
+        }, 1100);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                addPurpleToolTipView();
+            }
+        }, 1300);
+
     }
 
     private void addRedToolTipView() {
-        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_red)), findViewById(R.id.activity_main_redtv));
+        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_red)).withShadow(true), findViewById(R.id.activity_main_redtv));
         mRedToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addGreenToolTipView() {
-        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_green)), findViewById(R.id.activity_main_greentv));
+        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("Another beautiful Button!").withColor(getResources().getColor(R.color.holo_green)), findViewById(R.id.activity_main_greentv));
         mGreenToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addBlueToolTipView() {
-        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_blue)), findViewById(R.id.activity_main_bluetv));
+        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("Moarrrr buttons!").withColor(getResources().getColor(R.color.holo_blue)), findViewById(R.id.activity_main_bluetv));
         mBlueToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addPurpleToolTipView() {
-        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_purple)), findViewById(R.id.activity_main_purpletv));
+        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withContentView(LayoutInflater.from(this).inflate(R.layout.custom_tooltip, null)).withColor(getResources().getColor(R.color.holo_purple)), findViewById(R.id.activity_main_purpletv));
         mPurpleToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addOrangeToolTipView() {
-        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button").withColor(getResources().getColor(R.color.holo_orange)), findViewById(R.id.activity_main_orangetv));
+        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("Yet another one!").withColor(getResources().getColor(R.color.holo_orange)), findViewById(R.id.activity_main_orangetv));
         mOrangeToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 

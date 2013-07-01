@@ -40,6 +40,7 @@
         android:layout_centerInParent="true"
         android:text="Orange" />
 
+
     <com.haarman.supertoasts.ToolTipFrameLayout
         android:id="@+id/activity_main_tooltipframelayout"
         android:layout_width="match_parent"
