@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Supertooltips by nhaarman</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Supertooltips</h1>
+        <h2>SuperToolTips</h2>
+        <a href="https://github.com/nhaarman/supertooltips" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="supertooltips-play-store-demo" class="anchor" href="#supertooltips-play-store-demo"><span class="octicon octicon-link"></span></a>SuperToolTips (<a href="https://play.google.com/store/apps/details?id=com.haarman.supertooltips">Play Store Demo</a>)</h1>
+
+<p>SuperToolTips is an Open Source Android library that allows developers to easily create ToolTips for views.
+Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.</p>
+
+<p>For now, API11+ is supported, in the very near future, I will add support for API8+.</p>
+
+<h2>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<ul>
+<li>In Eclipse, just import the library as an Android library project.</li>
+<li>Project &gt; Clean to generate the binaries you need, like R.java, etc.</li>
+<li>Then, just add SuperToolTips as a dependency to your existing project and you're good to go!</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<ul>
+<li>In your layout xml file, add the <code>ToolTipFrameLayout</code> (<code>com.haarman.supertoasts.ToolTipFrameLayout</code>) with height and width of <code>match_parent</code>. Make sure this view is on top!</li>
+<li>Find the <code>ToolTipFrameLayout</code> in your code, and start adding <code>ToolTips</code>!</li>
+</ul><h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example:</h2>
+
+<pre><code>&lt;RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    tools:context=".MainActivity"&gt;
+
+    &lt;!-- Rest of Layout --&gt;
+
+    &lt;com.haarman.supertoasts.ToolTipFrameLayout
+        android:id="@+id/activity_main_tooltipframelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" /&gt;
+&lt;/RelativeLayout&gt;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    ToolTipFrameLayout toolTipFrameLayout = (ToolTipFrameLayout) findViewById(R.id.activity_main_tooltipframelayout);
+
+    myToolTipView = toolTipFrameLayout.showToolTipForView(
+            new ToolTip()
+                    .withText("A beautiful View")
+                    .withColor(Color.RED)
+                    .withShadow(true)
+                    .withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP),
+            findViewById(R.id.activity_main_redtv));
+    myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
+}
+</code></pre>
+
+<h2>
+<a name="tooltip-customization" class="anchor" href="#tooltip-customization"><span class="octicon octicon-link"></span></a>ToolTip customization</h2>
+
+<p>You can customize the <code>ToolTip</code> in several ways:</p>
+
+<ul>
+<li>Specify a content text using <code>ToolTip.setText()</code>.</li>
+<li>Set a color using <code>ToolTip.setColor()</code>.</li>
+<li>Specify whether to show a shadow or not with <code>ToolTip.setShadow()</code>.</li>
+<li>Specify how to animate the ToolTip: from the view itself or from the top, using <code>ToolTip.setAnimationType()</code>.</li>
+<li>Set your own custom content View using <code>ToolTip.setContentView()</code>.</li>
+</ul><p>See the examples.</p>
+
+<h2>
+<a name="developed-by" class="anchor" href="#developed-by"><span class="octicon octicon-link"></span></a>Developed By</h2>
+
+<ul>
+<li>Niek Haarman</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>Copyright 2013 Niek Haarman
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/nhaarman/supertooltips/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/nhaarman/supertooltips/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/nhaarman/supertooltips"></a> is maintained by <a href="https://github.com/nhaarman">nhaarman</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39653306-7");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
