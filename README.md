@@ -1,7 +1,7 @@
 SuperToolTips ([Play Store Demo][1])
 ===========
 
-ListViewAnimations is an Open Source Android library that allows developers to easily create ToolTips for views.
+SuperToolTips is an Open Source Android library that allows developers to easily create ToolTips for views.
 Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
 
 For now, API11+ is supported, in the very near future, I will add support for API8+.
@@ -10,7 +10,7 @@ Setup
 -----
 * In Eclipse, just import the library as an Android library project.
 * Project > Clean to generate the binaries you need, like R.java, etc.
-* Then, just add ListViewAnimations as a dependency to your existing project and you're good to go!
+* Then, just add SuperToolTips as a dependency to your existing project and you're good to go!
 
 Usage
 -----
