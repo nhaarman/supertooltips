@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.haarman.supertoasts.ToolTip;
-import com.haarman.supertoasts.ToolTipFrameLayout;
-import com.haarman.supertoasts.ToolTipView;
 
 public class MainActivity extends Activity implements View.OnClickListener, ToolTipView.OnToolTipViewClickedListener {
 
@@ -16,14 +13,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     private ToolTipView mBlueToolTipView;
     private ToolTipView mPurpleToolTipView;
     private ToolTipView mOrangeToolTipView;
-    private ToolTipFrameLayout mToolTipFrameLayout;
+    private ToolTipRelativeLayout mToolTipFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolTipFrameLayout = (ToolTipFrameLayout) findViewById(R.id.activity_main_tooltipframelayout);
+        mToolTipFrameLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipframelayout);
         findViewById(R.id.activity_main_redtv).setOnClickListener(MainActivity.this);
         findViewById(R.id.activity_main_greentv).setOnClickListener(MainActivity.this);
         findViewById(R.id.activity_main_bluetv).setOnClickListener(MainActivity.this);

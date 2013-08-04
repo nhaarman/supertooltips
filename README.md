@@ -1,10 +1,12 @@
 SuperToolTips ([Play Store Demo][1])
 ===========
 
-SuperToolTips is an Open Source Android library that allows developers to easily create ToolTips for views.
+SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views, from API 8 and on.
 Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
 
-For now, API11+ is supported, in the very near future, I will add support for API8+.
+Note
+-----
+Version 2.0 brought some changes with it. The package name has changed to `com.haarman.supertooltips`, and the `ToolTipFrameLayout` has been renamed to `ToolTipRelativeLayout`. Please modify your own code to suit these changes.
 
 Setup
 -----
@@ -15,8 +17,8 @@ Setup
 Usage
 -----
 
-* In your layout xml file, add the `ToolTipFrameLayout` (`com.haarman.supertoasts.ToolTipFrameLayout`) with height and width of `match_parent`. Make sure this view is on top!
-* Find the `ToolTipFrameLayout` in your code, and start adding `ToolTips`!
+* In your layout xml file, add the `ToolTipRelativeLayout` (`com.haarman.supertooltips.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
+* Find the `ToolTipRelativeLayout` in your code, and start adding `ToolTips`!
 
 Example:
 -----
@@ -30,8 +32,8 @@ Example:
 
 		<!-- Rest of Layout -->
 
-		<com.haarman.supertoasts.ToolTipFrameLayout
-			android:id="@+id/activity_main_tooltipframelayout"
+		<com.haarman.supertooltips.ToolTipRelativeLayout
+			android:id="@+id/activity_main_tooltipRelativeLayout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" />
 	</RelativeLayout>
@@ -41,9 +43,9 @@ Example:
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ToolTipFrameLayout toolTipFrameLayout = (ToolTipFrameLayout) findViewById(R.id.activity_main_tooltipframelayout);
+        ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 		
-		myToolTipView = toolTipFrameLayout.showToolTipForView(
+		myToolTipView = toolTipRelativeLayout.showToolTipForView(
                 new ToolTip()
                         .withText("A beautiful View")
                         .withColor(Color.RED)
