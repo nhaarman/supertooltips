@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.haarman.supertoasts.ToolTip;
-import com.haarman.supertoasts.ToolTipRelativeLayout;
-import com.haarman.supertoasts.ToolTipView;
 
 public class MainActivity extends Activity implements View.OnClickListener, ToolTipView.OnToolTipViewClickedListener {
 

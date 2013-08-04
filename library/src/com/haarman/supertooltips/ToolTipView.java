@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.haarman.supertoasts;
+package com.haarman.supertooltips;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.haarman.supertooltips.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;

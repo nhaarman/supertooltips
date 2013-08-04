@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.haarman.supertoasts;
+package com.haarman.supertooltips;
 
 import android.content.Context;
 import android.util.AttributeSet;

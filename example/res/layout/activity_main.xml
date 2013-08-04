@@ -41,7 +41,7 @@
         android:text="Orange" />
 
 
-    <com.haarman.supertoasts.ToolTipRelativeLayout
+    <com.haarman.supertooltips.ToolTipRelativeLayout
         android:id="@+id/activity_main_tooltipframelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
