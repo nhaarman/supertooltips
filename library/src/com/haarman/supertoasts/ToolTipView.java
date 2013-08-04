@@ -227,7 +227,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                ((ViewGroup) getParent()).removeView(ToolTipView.this);
+                if (getParent() != null) {
+                    ((ViewGroup) getParent()).removeView(ToolTipView.this);
+                }
             }
 
             @Override
