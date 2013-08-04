@@ -18,24 +18,25 @@ package com.haarman.supertoasts;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
-public class ToolTipFrameLayout extends FrameLayout {
+public class ToolTipRelativeLayout extends RelativeLayout {
 
-    public ToolTipFrameLayout(Context context) {
+    public ToolTipRelativeLayout(Context context) {
         super(context);
     }
 
-    public ToolTipFrameLayout(Context context, AttributeSet attrs) {
+    public ToolTipRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ToolTipFrameLayout(Context context, AttributeSet attrs, int defStyle) {
+    public ToolTipRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
     /**
      * Shows a ToolTipView based on gived ToolTip at the proper location relative to given View.
+     *
      * @return the ToolTipView that was created.
      */
     public ToolTipView showToolTipForView(ToolTip toolTip, final View view) {

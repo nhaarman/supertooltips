@@ -3,9 +3,9 @@
     package="com.haarman.supertooltips"
     android:versionCode="201307021"
     android:versionName="1.0" >
-
+8
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
     <application

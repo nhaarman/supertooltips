@@ -15,26 +15,29 @@
 
 package com.haarman.supertoasts;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.haarman.supertooltips.R;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A View to visualize ToolTips. Use ToolTipFrameLayout.showToolTipForView() to show ToolTips.
+ * A ViewGroup to visualize ToolTips. Use ToolTipRelativeLayout.showToolTipForView() to show ToolTips.
  */
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 
@@ -63,7 +66,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     private void init() {
-        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.tooltip, this, true);
 
@@ -86,7 +89,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         mWidth = mContentHolder.getWidth();
 
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
         layoutParams.width = mWidth;
         setLayoutParams(layoutParams);
 
@@ -143,7 +146,6 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         float toolTipViewBelowY = mRelativeMasterViewY + masterViewHeight;
         float toolTipViewY;
 
-        int width = mWidth;
         float toolTipViewX = Math.max(0, relativeMasterViewCenterX - mWidth / 2);
         if (toolTipViewX + mWidth > viewDisplayFrame.right) {
             toolTipViewX = viewDisplayFrame.right - mWidth;
@@ -152,9 +154,16 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setX(toolTipViewX);
         setPointerCenterX(relativeMasterViewCenterX);
 
-        boolean showBelow = toolTipViewAboveY < 0;
-        mTopPointerView.setVisibility(showBelow ? VISIBLE : GONE);
-        mBottomPointerView.setVisibility(showBelow ? GONE : VISIBLE);
+        final boolean showBelow = toolTipViewAboveY < 0;
+
+        if (Build.VERSION.SDK_INT < 11) {
+            ViewHelper.setAlpha(mTopPointerView, showBelow ? 1 : 0);
+            ViewHelper.setAlpha(mBottomPointerView, showBelow ? 0 : 1);
+        } else {
+            mTopPointerView.setVisibility(showBelow ? VISIBLE : GONE);
+            mBottomPointerView.setVisibility(showBelow ? GONE : VISIBLE);
+        }
+
         if (showBelow) {
             toolTipViewY = toolTipViewBelowY;
         } else {
@@ -177,14 +186,44 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animators);
+
+        if (Build.VERSION.SDK_INT < 11) {
+            final float fToolTipViewX = toolTipViewX;
+            final float fToolTipViewY = toolTipViewY;
+            animatorSet.addListener(new Animator.AnimatorListener() {
+
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                    params.leftMargin = (int) fToolTipViewX;
+                    params.topMargin = (int) fToolTipViewY;
+                    setX(0);
+                    setY(0);
+                    setLayoutParams(params);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+            });
+        }
+
         animatorSet.start();
     }
 
     public void setPointerCenterX(int pointerCenterX) {
         int pointerWidth = Math.max(mTopPointerView.getMeasuredWidth(), mBottomPointerView.getMeasuredWidth());
 
-        mTopPointerView.setX(pointerCenterX - pointerWidth / 2 - getX());
-        mBottomPointerView.setX(pointerCenterX - pointerWidth / 2 - getX());
+        ViewHelper.setX(mTopPointerView, pointerCenterX - pointerWidth / 2 - getX());
+        ViewHelper.setX(mBottomPointerView, pointerCenterX - pointerWidth / 2 - getX());
     }
 
     public void setOnToolTipViewClickedListener(OnToolTipViewClickedListener listener) {
@@ -205,6 +244,15 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     public void remove() {
+        if (Build.VERSION.SDK_INT < 11) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+            setX(params.leftMargin);
+            setY(params.topMargin);
+            params.leftMargin = 0;
+            params.topMargin = 0;
+            setLayoutParams(params);
+        }
+
         List<Animator> animators = new ArrayList<Animator>();
         if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
             animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
@@ -249,6 +297,54 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         if (mListener != null) {
             mListener.onToolTipViewClicked(this);
+        }
+    }
+
+    /**
+     * Convenience method for getting X.
+     */
+    @Override
+    public float getX() {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return super.getX();
+        } else {
+            return ViewHelper.getX(this);
+        }
+    }
+
+    /**
+     * Convenience method for setting X.
+     */
+    @Override
+    public void setX(float x) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            super.setX(x);
+        } else {
+            ViewHelper.setX(this, x);
+        }
+    }
+
+    /**
+     * Convenience method for getting Y.
+     */
+    @Override
+    public float getY() {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return super.getY();
+        } else {
+            return ViewHelper.getY(this);
+        }
+    }
+
+    /**
+     * Convenience method for setting Y.
+     */
+    @Override
+    public void setY(float y) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            super.setY(y);
+        } else {
+            ViewHelper.setY(this, y);
         }
     }
 
