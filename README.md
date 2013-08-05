@@ -71,7 +71,7 @@ See the examples.
 
 ActionBar
 -----
-Currently, the ([dev branch][2]) contains methods for showing `ToolTipView`s for ActionBar items. Please note that this is entirely experimental and may only work for the original ActionBar.
+Currently, the [dev branch][2] contains methods for showing `ToolTipView`s for ActionBar items. Please note that this is entirely experimental and may only work for the original ActionBar.
 
 Developed By
 -----
