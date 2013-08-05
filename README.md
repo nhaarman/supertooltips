@@ -69,6 +69,10 @@ You can customize the `ToolTip` in several ways:
 
 See the examples.
 
+ActionBar
+-----
+Currently, the [dev branch][2] contains methods for showing `ToolTipView`s for ActionBar items. Please note that this is entirely experimental and may only work for the original ActionBar.
+
 Developed By
 -----
 * Niek Haarman
@@ -91,3 +95,4 @@ License
 	limitations under the License.
 
  [1]: https://play.google.com/store/apps/details?id=com.haarman.supertooltips
+ [2]: https://github.com/nhaarman/supertooltips/tree/dev
