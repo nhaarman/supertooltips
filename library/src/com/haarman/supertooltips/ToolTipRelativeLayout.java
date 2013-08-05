@@ -58,11 +58,11 @@ public class ToolTipRelativeLayout extends RelativeLayout {
 	}
 
 	/**
-	 * Shows a {@link ToolTipView} based on given {@link ToolTip} at the proper
-	 * location relative to the {@link View} with given resource id.</p>NOTE:
-	 * This method will throw a {@link ViewNotFoundRuntimeException} if the View
-	 * is not found. You can choose to ignore this by catching the
-	 * ViewNotFoundRuntimeException.
+	 * **EXPERIMENTAL**</p> Shows a {@link ToolTipView} based on given
+	 * {@link ToolTip} at the proper location relative to the {@link View} with
+	 * given resource id.</p>NOTE: This method will throw a
+	 * {@link ViewNotFoundRuntimeException} if the View is not found. You can
+	 * choose to ignore this by catching the ViewNotFoundRuntimeException.
 	 * 
 	 * @param activity
 	 *            the Activity which holds the ActionBar.
@@ -88,8 +88,9 @@ public class ToolTipRelativeLayout extends RelativeLayout {
 	}
 
 	/**
-	 * Shows a {@link ToolTipView} based on given {@link ToolTip} at the proper
-	 * location relative to the {@link ActionBar} home {@link View}.
+	 * **EXPERIMENTAL**</p> Shows a {@link ToolTipView} based on given
+	 * {@link ToolTip} at the proper location relative to the {@link ActionBar}
+	 * home {@link View}.
 	 * 
 	 * @param activity
 	 *            the Activity which holds the ActionBar.
@@ -104,6 +105,8 @@ public class ToolTipRelativeLayout extends RelativeLayout {
 	}
 
 	/**
+	 * **EXPERIMENTAL**</p>
+	 * 
 	 * Shows a {@link ToolTipView} based on given {@link ToolTip} at the proper
 	 * location relative to the {@link ActionBar} title {@link View}.</p>NOTE:
 	 * This method will throw a {@link NoTitleViewRuntimeException} if the title
@@ -128,13 +131,14 @@ public class ToolTipRelativeLayout extends RelativeLayout {
 	}
 
 	/**
-	 * Shows a {@link ToolTipView} based on given {@link ToolTip} at the proper
-	 * location relative to the overflow menu button.</p>NOTE: This method will
-	 * throw a {@link NoOverflowMenuRuntimeException} if the overflow menu is
-	 * not found. This happens when there simply is no overflow menu button, or
-	 * the menu isn't initialised yet. You can choose to ignore this by catching
-	 * the NoOverflowMenuRuntimeException.</p>NOTE: This method uses an internal
-	 * API to find the View. It MAY cause your application to crash in future
+	 * **EXPERIMENTAL**</p> Shows a {@link ToolTipView} based on given
+	 * {@link ToolTip} at the proper location relative to the overflow menu
+	 * button.</p>NOTE: This method will throw a
+	 * {@link NoOverflowMenuRuntimeException} if the overflow menu is not found.
+	 * This happens when there simply is no overflow menu button, or the menu
+	 * isn't initialised yet. You can choose to ignore this by catching the
+	 * NoOverflowMenuRuntimeException.</p>NOTE: This method uses an internal API
+	 * to find the View. It MAY cause your application to crash in future
 	 * Android versions.
 	 * 
 	 * @param activity
