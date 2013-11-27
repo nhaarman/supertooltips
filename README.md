@@ -22,39 +22,39 @@ Usage
 
 Example:
 -----
+```Java
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"	
+	tools:context=".MainActivity">
 
-	<RelativeLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
+	<!-- Rest of Layout -->
+
+	<com.haarman.supertooltips.ToolTipRelativeLayout
+		android:id="@+id/activity_main_tooltipRelativeLayout"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"	
-		tools:context=".MainActivity">
+		android:layout_height="match_parent" />
+</RelativeLayout>
 
-		<!-- Rest of Layout -->
-
-		<com.haarman.supertooltips.ToolTipRelativeLayout
-			android:id="@+id/activity_main_tooltipRelativeLayout"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-	</RelativeLayout>
-
-	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_main);
+	
+	ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 		
 		myToolTipView = toolTipRelativeLayout.showToolTipForView(
-                new ToolTip()
-                        .withText("A beautiful View")
-                        .withColor(Color.RED)
-                        .withShadow(true)
+	        new ToolTip()
+	                .withText("A beautiful View")
+	                .withColor(Color.RED)
+	                .withShadow(true)
 						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP),
-                findViewById(R.id.activity_main_redtv));
-        myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
-	}
-	
+	        findViewById(R.id.activity_main_redtv));
+	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
+}
+```
 	
 
 ToolTip customization
