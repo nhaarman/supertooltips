@@ -15,6 +15,7 @@
  */
 package com.haarman.supertooltips;
 
+import android.graphics.Typeface;
 import android.view.View;
 
 public class ToolTip {
@@ -28,12 +29,15 @@ public class ToolTip {
     private View contentView;
     private int animationType;
     private boolean shadow;
+    //typeface to be applied to TextView
+    private Typeface typeface;
 
     /**
      * Creates a new ToolTip without any values.
      */
     public ToolTip() {
         text = null;
+        typeface = null;
         textResId = 0;
         color = 0;
         contentView = null;
@@ -59,6 +63,19 @@ public class ToolTip {
     public ToolTip withText(int resId) {
         this.textResId = resId;
         this.text = null;
+        return this;
+    }
+    
+    /**
+     * Set the text resource id to show and the custom typeface for that view. Has no effect when a content View is set using setContentView().
+     *
+     * @return this ToolTip to build upon.
+     */
+    */
+    public ToolTip withText(int resId, Typeface tf) {
+        this.textResId = resId;
+        this.text = null;
+        this.setTypeface(tf);
         return this;
     }
 
@@ -125,4 +142,18 @@ public class ToolTip {
     public boolean getShadow() {
         return shadow;
     }
+
+	/**
+	 * @return the typeface
+	 */
+	public Typeface getTypeface() {
+		return typeface;
+	}
+
+	/**
+	 * @param typeface the typeface to set
+	 */
+	public void setTypeface(Typeface typeface) {
+		this.typeface = typeface;
+	}
 }
