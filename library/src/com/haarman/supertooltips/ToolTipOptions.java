@@ -15,9 +15,10 @@
  */
 package com.haarman.supertooltips;
 
+import android.graphics.Color;
 import android.view.View;
 
-public class ToolTip {
+public class ToolTipOptions {
 
     public static final int ANIMATIONTYPE_FROMMASTERVIEW = 101;
     public static final int ANIMATIONTYPE_FROMTOP = 102;
@@ -25,6 +26,7 @@ public class ToolTip {
     private CharSequence text;
     private int textResId;
     private int color;
+    private int textColor;
     private View contentView;
     private int animationType;
     private boolean shadow;
@@ -32,10 +34,11 @@ public class ToolTip {
     /**
      * Creates a new ToolTip without any values.
      */
-    public ToolTip() {
+    public ToolTipOptions() {
         text = null;
         textResId = 0;
         color = 0;
+        textColor = Color.BLACK;
         contentView = null;
         animationType = ANIMATIONTYPE_FROMMASTERVIEW;
     }
@@ -43,9 +46,9 @@ public class ToolTip {
     /**
      * Set the text to show. Has no effect when a content View is set using setContentView().
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withText(CharSequence text) {
+    public ToolTipOptions withText(CharSequence text) {
         this.text = text;
         this.textResId = 0;
         return this;
@@ -54,9 +57,9 @@ public class ToolTip {
     /**
      * Set the text resource id to show. Has no effect when a content View is set using setContentView().
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withText(int resId) {
+    public ToolTipOptions withText(int resId) {
         this.textResId = resId;
         this.text = null;
         return this;
@@ -65,44 +68,54 @@ public class ToolTip {
     /**
      * Set the color of the ToolTop. Default is white.
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withColor(int color) {
+    public ToolTipOptions withColor(int color) {
         this.color = color;
         return this;
     }
 
     /**
-     * Set a custom content View for the ToolTip. This will cause any text that has been set to be ignored.
+     * Set the color of the ToolTipOptions text. Default is black.
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withContentView(View view) {
+    public ToolTipOptions withTextColor(int color) {
+        this.textColor = color;
+        return this;
+    }
+
+    /**
+     * Set a custom content View for the ToolTipOptions. This will cause any text that has been set to be ignored.
+     *
+     * @return this ToolTipOptions to build upon.
+     */
+    public ToolTipOptions withContentView(View view) {
         this.contentView = view;
         return this;
     }
 
     /**
-     * Set the animation type for the ToolTip. One of ANIMATIONTYPE_FROMMASTERVIEW and ANIMATIONTYPE_FROMTOP. Default ANIMATIONTYPE_FROMMASTERVIEW.
+     * Set the animation type for the ToolTipOptions. One of ANIMATIONTYPE_FROMMASTERVIEW and ANIMATIONTYPE_FROMTOP. Default ANIMATIONTYPE_FROMMASTERVIEW.
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withAnimationType(int animationType) {
+    public ToolTipOptions withAnimationType(int animationType) {
         this.animationType = animationType;
         return this;
     }
 
     /**
-     * Set whether to show a shadow below the ToolTip.
+     * Set whether to show a shadow below the ToolTipOptions.
      *
-     * @return this ToolTip to build upon.
+     * @return this ToolTipOptions to build upon.
      */
-    public ToolTip withShadow(boolean shadow) {
+    public ToolTipOptions withShadow(boolean shadow) {
         this.shadow = shadow;
         return this;
     }
 
-    public CharSequence getText() {
+	public CharSequence getText() {
         return text;
     }
 
@@ -112,6 +125,10 @@ public class ToolTip {
 
     public int getColor() {
         return color;
+    }
+
+    public int getTextColor() {
+        return textColor;
     }
 
     public View getContentView() {

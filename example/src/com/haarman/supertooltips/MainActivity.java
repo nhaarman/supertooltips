@@ -114,47 +114,45 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.activity_main_redtv:
-                if (mRedToolTipView == null) {
-                    addRedToolTipView();
-                } else {
-                    mRedToolTipView.remove();
-                    mRedToolTipView = null;
-                }
-                break;
-            case R.id.activity_main_greentv:
-                if (mGreenToolTipView == null) {
-                    addGreenToolTipView();
-                } else {
-                    mGreenToolTipView.remove();
-                    mGreenToolTipView = null;
-                }
-                break;
-            case R.id.activity_main_bluetv:
-                if (mBlueToolTipView == null) {
-                    addBlueToolTipView();
-                } else {
-                    mBlueToolTipView.remove();
-                    mBlueToolTipView = null;
-                }
-                break;
-            case R.id.activity_main_purpletv:
-                if (mPurpleToolTipView == null) {
-                    addPurpleToolTipView();
-                } else {
-                    mPurpleToolTipView.remove();
-                    mPurpleToolTipView = null;
-                }
-                break;
-            case R.id.activity_main_orangetv:
-                if (mOrangeToolTipView == null) {
-                    addOrangeToolTipView();
-                } else {
-                    mOrangeToolTipView.remove();
-                    mOrangeToolTipView = null;
-                }
-                break;
+        if (view.getId() == R.id.activity_main_redtv) {
+            if (mRedToolTipView == null) {
+                addRedToolTipView();
+            } else {
+                mRedToolTipView.remove();
+                mRedToolTipView = null;
+            }
+        }
+        if (view.getId() == R.id.activity_main_greentv) {
+            if (mGreenToolTipView == null) {
+                addGreenToolTipView();
+            } else {
+                mGreenToolTipView.remove();
+                mGreenToolTipView = null;
+            }
+        }
+        if (view.getId() == R.id.activity_main_bluetv) {
+            if (mBlueToolTipView == null) {
+                addBlueToolTipView();
+            } else {
+                mBlueToolTipView.remove();
+                mBlueToolTipView = null;
+            }
+        }
+        if (view.getId() == R.id.activity_main_purpletv) {
+            if (mPurpleToolTipView == null) {
+                addPurpleToolTipView();
+            } else {
+                mPurpleToolTipView.remove();
+                mPurpleToolTipView = null;
+            }
+        }
+        if (view.getId() == R.id.activity_main_orangetv) {
+            if (mOrangeToolTipView == null) {
+                addOrangeToolTipView();
+            } else {
+                mOrangeToolTipView.remove();
+                mOrangeToolTipView = null;
+            }
         }
     }
 
