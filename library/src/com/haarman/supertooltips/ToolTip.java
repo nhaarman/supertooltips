@@ -25,6 +25,7 @@ public class ToolTip {
     private CharSequence text;
     private int textResId;
     private int color;
+    private int textColor;
     private View contentView;
     private int animationType;
     private boolean shadow;
@@ -36,6 +37,7 @@ public class ToolTip {
         text = null;
         textResId = 0;
         color = 0;
+        textColor = -1;
         contentView = null;
         animationType = ANIMATIONTYPE_FROMMASTERVIEW;
     }
@@ -69,6 +71,16 @@ public class ToolTip {
      */
     public ToolTip withColor(int color) {
         this.color = color;
+        return this;
+    }
+    
+    /**
+     * Set the text color of the ToolTip. Default is white.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withTextColor(int color) {
+        this.textColor = color;
         return this;
     }
 
@@ -112,6 +124,10 @@ public class ToolTip {
 
     public int getColor() {
         return color;
+    }
+    
+    public int getTextColor() {
+        return textColor;
     }
 
     public View getContentView() {
