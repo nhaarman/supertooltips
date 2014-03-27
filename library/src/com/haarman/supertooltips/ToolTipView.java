@@ -57,7 +57,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private int mRelativeMasterViewX;
     private int mWidth;
     //
-    private OnToolTipViewClickedListener mListener;
+    private OnToolTipViewClickedListener mOnToolTipViewClickedListener;
+    private OnToolTipViewRemovedListener mOnToolTipViewRemovedListener;
 
     public ToolTipView(Context context) {
         super(context);
@@ -226,9 +227,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     public void setOnToolTipViewClickedListener(OnToolTipViewClickedListener listener) {
-        mListener = listener;
+        mOnToolTipViewClickedListener = listener;
     }
 
+    void setOnToolTipViewRemovedListener(OnToolTipViewRemovedListener listener) {
+        mOnToolTipViewRemovedListener = listener;
+    }
+    
     public void setColor(int color) {
         mTopPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
@@ -277,6 +282,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 if (getParent() != null) {
                     ((ViewGroup) getParent()).removeView(ToolTipView.this);
                 }
+                if (mOnToolTipViewRemovedListener != null) {
+                    mOnToolTipViewRemovedListener.onToolTipRemoved(ToolTipView.this);
+                }
             }
 
             @Override
@@ -294,8 +302,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public void onClick(View view) {
         remove();
 
-        if (mListener != null) {
-            mListener.onToolTipViewClicked(this);
+        if (mOnToolTipViewClickedListener != null) {
+            mOnToolTipViewClickedListener.onToolTipViewClicked(this);
         }
     }
 
@@ -349,5 +357,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public interface OnToolTipViewClickedListener {
         public void onToolTipViewClicked(ToolTipView toolTipView);
+    }
+    
+    public interface OnToolTipViewRemovedListener {
+        public void onToolTipRemoved(ToolTipView toolTipView);
     }
 }

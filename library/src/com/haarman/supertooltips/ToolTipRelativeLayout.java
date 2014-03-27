@@ -35,15 +35,12 @@ public class ToolTipRelativeLayout extends RelativeLayout {
     }
 
     /**
-     * Shows a ToolTipView based on gived ToolTip at the proper location relative to given View.
+     * Shows a ToolTipView based on given ToolTip at the proper location relative to given View.
      *
      * @return the ToolTipView that was created.
      */
-    public ToolTipView showToolTipForView(ToolTip toolTip, final View view) {
-        final ToolTipView toolTipView = new ToolTipView(getContext());
-        toolTipView.setToolTip(toolTip, view);
-        addView(toolTipView);
-        return toolTipView;
+    public ToolTipView createAndShow(ToolTip toolTip, final View targetView) {
+        return ToolTipFactory.createAndShow(this, toolTip, targetView);
     }
 
 }
