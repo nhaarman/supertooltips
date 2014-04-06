@@ -16,4 +16,7 @@
 
     <!-- Holo red color -->
     <color name="holo_red">#ff4444</color>
+
+    <!-- Holo blue dark color -->
+    <color name="holo_blue_dark">#0099cc</color>
 </resources>

@@ -55,7 +55,8 @@ protected void onCreate(Bundle savedInstanceState) {
 	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
 }
 ```
-	
+
+* Alternatively, if don't want to include a 'ToolTipRelativeLayout' in your layout, you can directly show the tooltip with `ToolTipFactory.createAndShow(Activity, ToolTip, View)`. This is closer to the way you show `Toasts` in your app. You can point to a view in the actionbar using this method.
 
 ToolTip customization
 -----
@@ -66,6 +67,7 @@ You can customize the `ToolTip` in several ways:
 * Specify whether to show a shadow or not with `ToolTip.setShadow()`.
 * Specify how to animate the ToolTip: from the view itself or from the top, using `ToolTip.setAnimationType()`.
 * Set your own custom content View using `ToolTip.setContentView()`.
+* Set your own custom appearance to the text using `ToolTip.withTextAppearance()`.
 
 See the examples.
 
