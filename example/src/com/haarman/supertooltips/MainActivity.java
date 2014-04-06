@@ -7,8 +7,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class MainActivity extends Activity implements View.OnClickListener,
-        ToolTipView.OnToolTipViewClickedListener {
+public class MainActivity extends Activity implements View.OnClickListener, ToolTipView.OnToolTipViewClickedListener {
 
     private ToolTipView mRedToolTipView;
     private ToolTipView mGreenToolTipView;
@@ -23,16 +22,11 @@ public class MainActivity extends Activity implements View.OnClickListener,
         setContentView(R.layout.activity_main);
 
         mToolTipFrameLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipframelayout);
-        findViewById(R.id.activity_main_redtv).setOnClickListener(
-                MainActivity.this);
-        findViewById(R.id.activity_main_greentv).setOnClickListener(
-                MainActivity.this);
-        findViewById(R.id.activity_main_bluetv).setOnClickListener(
-                MainActivity.this);
-        findViewById(R.id.activity_main_purpletv).setOnClickListener(
-                MainActivity.this);
-        findViewById(R.id.activity_main_orangetv).setOnClickListener(
-                MainActivity.this);
+        findViewById(R.id.activity_main_redtv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_greentv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_bluetv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_purpletv).setOnClickListener(MainActivity.this);
+        findViewById(R.id.activity_main_orangetv).setOnClickListener(MainActivity.this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -79,45 +73,39 @@ public class MainActivity extends Activity implements View.OnClickListener,
     }
 
     private void addRedToolTipView() {
-        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(
-                new ToolTip().withText("A beautiful Button")
-                        .withColor(getResources().getColor(R.color.holo_red))
-                        .withShadow(true),
-                findViewById(R.id.activity_main_redtv));
+        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("A beautiful Button")
+                                                                              .withColor(getResources().getColor(R.color.holo_red))
+                                                                              .withShadow(true), findViewById(R.id.activity_main_redtv));
         mRedToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addGreenToolTipView() {
-        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(
-                new ToolTip().withText("Another beautiful Button!").withColor(
-                        getResources().getColor(R.color.holo_green)),
+        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("With custom text style!")
+                                                                                .withColor(getResources().getColor(R.color.holo_green))
+                                                                                .withTextAppearance(R.style.CustomTooltipTextAppearance),
                 findViewById(R.id.activity_main_greentv));
         mGreenToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addBlueToolTipView() {
-        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(
-                new ToolTip().withText("Moarrrr buttons!")
-                        .withColor(getResources().getColor(R.color.holo_blue))
-                        .withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP),
+        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("Moarrrr buttons!")
+                                                                               .withColor(getResources().getColor(R.color.holo_blue))
+                                                                               .withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP),
                 findViewById(R.id.activity_main_bluetv));
         mBlueToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addPurpleToolTipView() {
-        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(
-                new ToolTip().withContentView(
-                        LayoutInflater.from(this).inflate(
-                                R.layout.custom_tooltip, null)).withColor(
-                        getResources().getColor(R.color.holo_purple)),
+        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withContentView(LayoutInflater.from(this)
+                                                                                                                .inflate(R.layout.custom_tooltip, null))
+                                                                                 .withColor(getResources().getColor(R.color.holo_purple)),
                 findViewById(R.id.activity_main_purpletv));
         mPurpleToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
 
     private void addOrangeToolTipView() {
-        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(
-                new ToolTip().withText("Tap me!").withColor(
-                        getResources().getColor(R.color.holo_orange)),
+        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(new ToolTip().withText("Tap me!")
+                                                                                 .withColor(getResources().getColor(R.color.holo_orange)),
                 findViewById(R.id.activity_main_orangetv));
         mOrangeToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
     }
@@ -133,7 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
         View targetView = findViewById(android.R.id.home);
 
         ToolTip toolTip = new ToolTip().withText("In the action bar!")
-                .withColor(getResources().getColor(R.color.holo_blue_dark));
+                                       .withColor(getResources().getColor(R.color.holo_blue_dark));
 
         // The tooltip is created using the ToolTipFactory, and it can be
         // painted over the action bar

@@ -15,6 +15,9 @@
 
 package com.haarman.supertooltips;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -27,16 +30,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * A ViewGroup to visualize ToolTips. Use ToolTipRelativeLayout.showToolTipForView() to show ToolTips.
+ * A ViewGroup to visualize ToolTips. Use
+ * ToolTipRelativeLayout.showToolTipForView() to show ToolTips.
  */
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 
@@ -68,7 +70,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private void init() {
         setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         setOrientation(VERTICAL);
-        LayoutInflater.from(getContext()).inflate(R.layout.tooltip, this, true);
+        LayoutInflater.from(getContext())
+                      .inflate(R.layout.tooltip, this, true);
 
         mTopPointerView = (ImageView) findViewById(R.id.tooltip_pointer_up);
         mTopFrame = findViewById(R.id.tooltip_topframe);
@@ -121,6 +124,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             mShadowView.setVisibility(View.GONE);
         }
 
+        if (mToolTip.getTextAppearance() != 0) {
+            mToolTipTV.setTextAppearance(view.getContext(), mToolTip.getTextAppearance());
+        }
+
         if (mDimensionsKnown) {
             applyToolTipPosition();
         }
@@ -130,7 +137,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         final int[] masterViewScreenPosition = new int[2];
         final int[] parentViewScreenPosition = new int[2];
 
-        final Rect viewDisplayFrame = new Rect(); // includes decorations (e.g. status bar)
+        final Rect viewDisplayFrame = new Rect(); // includes decorations (e.g.
+                                                  // status bar)
         mView.getLocationOnScreen(masterViewScreenPosition);
         mView.getWindowVisibleDisplayFrame(viewDisplayFrame);
         ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
@@ -233,12 +241,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     void setOnToolTipViewRemovedListener(OnToolTipViewRemovedListener listener) {
         mOnToolTipViewRemovedListener = listener;
     }
-    
+
     public void setColor(int color) {
         mTopPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        mTopFrame.getBackground()
+                 .setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         mBottomPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mBottomFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        mBottomFrame.getBackground()
+                    .setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         mContentHolder.setBackgroundColor(color);
     }
 
@@ -358,7 +368,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public interface OnToolTipViewClickedListener {
         public void onToolTipViewClicked(ToolTipView toolTipView);
     }
-    
+
     public interface OnToolTipViewRemovedListener {
         public void onToolTipRemoved(ToolTipView toolTipView);
     }

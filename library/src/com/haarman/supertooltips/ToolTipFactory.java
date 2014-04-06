@@ -8,7 +8,7 @@ import com.haarman.supertooltips.ToolTipView.OnToolTipViewRemovedListener;
 
 public class ToolTipFactory {
 
-    public static ToolTipView createAndShow(
+    public static ToolTipView showToolTipForView(
             final ToolTipRelativeLayout parent, final ToolTip toolTip,
             final View targetView) {
 
@@ -22,7 +22,7 @@ public class ToolTipFactory {
             final ToolTip toolTip, final View targetView) {
 
         final ToolTipRelativeLayout parent = createTooltipRelativeLayout(activity);
-        final ToolTipView toolTipView = createAndShow(parent,
+        final ToolTipView toolTipView = showToolTipForView(parent,
                 toolTip, targetView);
 
         toolTipView
