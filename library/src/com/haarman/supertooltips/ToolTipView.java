@@ -98,15 +98,18 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         return true;
     }
 
-    public void setToolTip(ToolTip toolTip, View view) {
+    public void setToolTip(ToolTip toolTip, View view,int color) {
         mToolTip = toolTip;
         mView = view;
+        
+
 
         if (mToolTip.getText() != null) {
             mToolTipTV.setText(mToolTip.getText());
         } else if (mToolTip.getTextResId() != 0) {
             mToolTipTV.setText(mToolTip.getTextResId());
         }
+        
 
         if (mToolTip.getColor() != 0) {
             setColor(mToolTip.getColor());
@@ -123,6 +126,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         if (mDimensionsKnown) {
             applyToolTipPosition();
         }
+        
+        mToolTipTV.setTextColor(color);
     }
 
     private void applyToolTipPosition() {
