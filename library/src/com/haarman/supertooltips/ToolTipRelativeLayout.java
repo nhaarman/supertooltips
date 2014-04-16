@@ -39,9 +39,9 @@ public class ToolTipRelativeLayout extends RelativeLayout {
      *
      * @return the ToolTipView that was created.
      */
-    public ToolTipView showToolTipForView(ToolTip toolTip, final View view) {
+    public ToolTipView showToolTipForView(ToolTip toolTip, final View view,int textColor) {
         final ToolTipView toolTipView = new ToolTipView(getContext());
-        toolTipView.setToolTip(toolTip, view);
+        toolTipView.setToolTip(toolTip, view, textColor);
         addView(toolTipView);
         return toolTipView;
     }
