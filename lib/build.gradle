@@ -1,5 +1,7 @@
 apply plugin: 'android-library'
 
+apply from: 'pushMaven.gradle'
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.0.3"
@@ -7,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(new Date().format('yyyyMMddHH'))
+        versionName VERSION_NAME
     }
 
     compileOptions {
