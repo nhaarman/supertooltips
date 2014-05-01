@@ -115,6 +115,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             mToolTipTV.setTypeface(mToolTip.getTypeface());
         }
 
+        if (mToolTip.getTextColor() != 0) {
+            mToolTipTV.setTextColor(mToolTip.getTextColor());
+        }
+
         if (mToolTip.getColor() != 0) {
             setColor(mToolTip.getColor());
         }
