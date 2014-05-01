@@ -1,38 +1,43 @@
-SuperToolTips ([Play Store Demo][1])
+SuperToolTips ([Play Store Demo][1]) [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
 ===========
 
-SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views, from API 8 and on.
+SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views.
 Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
-
-Note
------
-Version 2.0 brought some changes with it. The package name has changed to `com.haarman.supertooltips`, and the `ToolTipFrameLayout` has been renamed to `ToolTipRelativeLayout`. Please modify your own code to suit these changes.
 
 Setup
 -----
-* In Eclipse, just import the library as an Android library project.
-* Project > Clean to generate the binaries you need, like R.java, etc.
-* Then, just add SuperToolTips as a dependency to your existing project and you're good to go!
+*Note: SuperToolTips now uses the gradle build structure. If you want to use this project in Eclipse, you should make the necessary changes.*
 
+Add the following to your `build.gradle`:
+
+
+```groovy
+dependencies {
+    compile 'com.nhaarman.supertooltips:library:3.0.+'
+}
+
+```
 Usage
 -----
 
-* In your layout xml file, add the `ToolTipRelativeLayout` (`com.haarman.supertooltips.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
+* In your layout xml file, add the `ToolTipRelativeLayout` (`com.nhaarman.supertooltips.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
 * Find the `ToolTipRelativeLayout` in your code, and start adding `ToolTips`!
 
 Example:
 -----
-```Java
+```java
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"	
-	tools:context=".MainActivity">
+	android:layout_height="match_parent">
 
-	<!-- Rest of Layout -->
+	<TextView
+	    android:id="@+id/activity_main_redtv"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true" />
 
-	<com.haarman.supertooltips.ToolTipRelativeLayout
+	<com.nhaarman.supertooltips.ToolTipRelativeLayout
 		android:id="@+id/activity_main_tooltipRelativeLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
@@ -45,13 +50,12 @@ protected void onCreate(Bundle savedInstanceState) {
 	
 	ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 		
-		myToolTipView = toolTipRelativeLayout.showToolTipForView(
-	        new ToolTip()
-	                .withText("A beautiful View")
-	                .withColor(Color.RED)
-	                .withShadow(true)
-						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP),
-	        findViewById(R.id.activity_main_redtv));
+	ToolTip toolTip = new ToolTip()
+	                    .withText("A beautiful View")
+	                    .withColor(Color.RED)
+	                    .withShadow(true)
+						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP);
+	myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
 	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
 }
 ```
@@ -68,10 +72,6 @@ You can customize the `ToolTip` in several ways:
 * Set your own custom content View using `ToolTip.setContentView()`.
 
 See the examples.
-
-ActionBar
------
-Currently, the [dev branch][2] contains methods for showing `ToolTipView`s for ActionBar items. Please note that this is entirely experimental and may only work for the original ActionBar.
 
 Developed By
 -----
@@ -95,4 +95,3 @@ License
 	limitations under the License.
 
  [1]: https://play.google.com/store/apps/details?id=com.haarman.supertooltips
- [2]: https://github.com/nhaarman/supertooltips/tree/dev
