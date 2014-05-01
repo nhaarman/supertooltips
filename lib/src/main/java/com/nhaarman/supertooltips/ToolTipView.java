@@ -181,54 +181,59 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             toolTipViewY = toolTipViewAboveY;
         }
 
-        List<Animator> animators = new ArrayList<Animator>();
+        if (mToolTip.getAnimationType() != ToolTip.AnimationType.NONE) {
+            List<Animator> animators = new ArrayList<Animator>();
 
-        if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
-            animators.add(ObjectAnimator.ofFloat(this, "translationY", mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2, toolTipViewY));
-            animators.add(ObjectAnimator.ofFloat(this, "translationX", mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2, toolTipViewX));
-        } else if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMTOP) {
-            animators.add(ObjectAnimator.ofFloat(this, "translationY", 0, toolTipViewY));
+            if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
+                animators.add(ObjectAnimator.ofFloat(this, "translationY", mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2, toolTipViewY));
+                animators.add(ObjectAnimator.ofFloat(this, "translationX", mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2, toolTipViewX));
+            } else if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_TOP) {
+                animators.add(ObjectAnimator.ofFloat(this, "translationY", 0, toolTipViewY));
+            }
+
+            animators.add(ObjectAnimator.ofFloat(this, "scaleX", 0, 1));
+            animators.add(ObjectAnimator.ofFloat(this, "scaleY", 0, 1));
+
+            animators.add(ObjectAnimator.ofFloat(this, "alpha", 0, 1));
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(animators);
+
+            if (Build.VERSION.SDK_INT < 11) {
+                final float fToolTipViewX = toolTipViewX;
+                final float fToolTipViewY = toolTipViewY;
+                animatorSet.addListener(new Animator.AnimatorListener() {
+
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                    }
+
+                    @Override
+                    @SuppressLint("NewApi")
+                    public void onAnimationEnd(Animator animator) {
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                        params.leftMargin = (int) fToolTipViewX;
+                        params.topMargin = (int) fToolTipViewY;
+                        setX(0);
+                        setY(0);
+                        setLayoutParams(params);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+                    }
+                });
+            }
+
+            animatorSet.start();
+        } else {
+            ViewHelper.setTranslationY(this, toolTipViewY);
+            ViewHelper.setTranslationX(this, toolTipViewX);
         }
-
-        animators.add(ObjectAnimator.ofFloat(this, "scaleX", 0, 1));
-        animators.add(ObjectAnimator.ofFloat(this, "scaleY", 0, 1));
-
-        animators.add(ObjectAnimator.ofFloat(this, "alpha", 0, 1));
-
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animators);
-
-        if (Build.VERSION.SDK_INT < 11) {
-            final float fToolTipViewX = toolTipViewX;
-            final float fToolTipViewY = toolTipViewY;
-            animatorSet.addListener(new Animator.AnimatorListener() {
-
-                @Override
-                public void onAnimationStart(Animator animator) {
-                }
-
-                @Override
-                @SuppressLint("NewApi")
-                public void onAnimationEnd(Animator animator) {
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-                    params.leftMargin = (int) fToolTipViewX;
-                    params.topMargin = (int) fToolTipViewY;
-                    setX(0);
-                    setY(0);
-                    setLayoutParams(params);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                }
-            });
-        }
-
-        animatorSet.start();
     }
 
     public void setPointerCenterX(int pointerCenterX) {
@@ -265,42 +270,48 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             setLayoutParams(params);
         }
 
-        List<Animator> animators = new ArrayList<Animator>();
-        if (mToolTip.getAnimationType() == ToolTip.ANIMATIONTYPE_FROMMASTERVIEW) {
-            animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
-            animators.add(ObjectAnimator.ofFloat(this, "translationX", getX(), mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2));
-        } else {
-            animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), 0));
-        }
-
-        animators.add(ObjectAnimator.ofFloat(this, "scaleX", 1, 0));
-        animators.add(ObjectAnimator.ofFloat(this, "scaleY", 1, 0));
-
-        animators.add(ObjectAnimator.ofFloat(this, "alpha", 1, 0));
-
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animators);
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
+        if (mToolTip.getAnimationType() != ToolTip.AnimationType.NONE) {
+            List<Animator> animators = new ArrayList<Animator>();
+            if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
+                animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
+                animators.add(ObjectAnimator.ofFloat(this, "translationX", getX(), mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2));
+            } else {
+                animators.add(ObjectAnimator.ofFloat(this, "translationY", getY(), 0));
             }
 
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (getParent() != null) {
-                    ((ViewGroup) getParent()).removeView(ToolTipView.this);
+            animators.add(ObjectAnimator.ofFloat(this, "scaleX", 1, 0));
+            animators.add(ObjectAnimator.ofFloat(this, "scaleY", 1, 0));
+
+            animators.add(ObjectAnimator.ofFloat(this, "alpha", 1, 0));
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(animators);
+            animatorSet.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
                 }
-            }
 
-            @Override
-            public void onAnimationCancel(Animator animator) {
-            }
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    if (getParent() != null) {
+                        ((ViewGroup) getParent()).removeView(ToolTipView.this);
+                    }
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animator) {
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+            });
+            animatorSet.start();
+        } else {
+            if (getParent() != null) {
+                ((ViewGroup) getParent()).removeView(ToolTipView.this);
             }
-        });
-        animatorSet.start();
+        }
     }
 
     @Override

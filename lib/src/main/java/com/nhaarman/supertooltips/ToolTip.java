@@ -20,15 +20,18 @@ import android.view.View;
 
 public class ToolTip {
 
-    public static final int ANIMATIONTYPE_FROMMASTERVIEW = 101;
-    public static final int ANIMATIONTYPE_FROMTOP = 102;
+    public enum AnimationType {
+        FROM_MASTER_VIEW,
+        FROM_TOP,
+        NONE
+    }
 
     private CharSequence text;
     private int textResId;
     private int color;
     private int textColor;
     private View contentView;
-    private int animationType;
+    private AnimationType animationType;
     private boolean shadow;
     private Typeface typeface;
 
@@ -41,7 +44,7 @@ public class ToolTip {
         textResId = 0;
         color = 0;
         contentView = null;
-        animationType = ANIMATIONTYPE_FROMMASTERVIEW;
+        animationType = AnimationType.FROM_MASTER_VIEW;
     }
 
     /**
@@ -109,11 +112,11 @@ public class ToolTip {
     }
 
     /**
-     * Set the animation type for the ToolTip. One of ANIMATIONTYPE_FROMMASTERVIEW and ANIMATIONTYPE_FROMTOP. Default ANIMATIONTYPE_FROMMASTERVIEW.
+     * Set the animation type for the ToolTip. Defaults to {@link AnimationType#FROM_MASTER_VIEW}.
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withAnimationType(int animationType) {
+    public ToolTip withAnimationType(AnimationType animationType) {
         this.animationType = animationType;
         return this;
     }
@@ -155,7 +158,7 @@ public class ToolTip {
         return contentView;
     }
 
-    public int getAnimationType() {
+    public AnimationType getAnimationType() {
         return animationType;
     }
 

@@ -92,7 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
         ToolTip toolTip = new ToolTip()
                 .withText("Moarrrr buttons!")
                 .withColor(getResources().getColor(R.color.holo_blue))
-                .withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP);
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
         mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
         mBlueToolTipView.setOnToolTipViewClickedListener(this);
@@ -101,7 +101,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     private void addPurpleToolTipView() {
         ToolTip toolTip = new ToolTip()
                 .withContentView(LayoutInflater.from(this).inflate(R.layout.custom_tooltip, null))
-                .withColor(getResources().getColor(R.color.holo_purple));
+                .withColor(getResources().getColor(R.color.holo_purple))
+                .withAnimationType(ToolTip.AnimationType.NONE);
 
         mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
         mPurpleToolTipView.setOnToolTipViewClickedListener(this);
