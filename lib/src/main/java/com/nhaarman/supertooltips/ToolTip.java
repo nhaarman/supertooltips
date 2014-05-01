@@ -26,25 +26,25 @@ public class ToolTip {
         NONE
     }
 
-    private CharSequence text;
-    private int textResId;
-    private int color;
-    private int textColor;
-    private View contentView;
-    private AnimationType animationType;
-    private boolean shadow;
-    private Typeface typeface;
+    private CharSequence mText;
+    private int mTextResId;
+    private int mColor;
+    private int mTextColor;
+    private View mContentView;
+    private AnimationType mAnimationType;
+    private boolean mShouldShowShadow;
+    private Typeface mTypeface;
 
     /**
      * Creates a new ToolTip without any values.
      */
     public ToolTip() {
-        text = null;
-        typeface = null;
-        textResId = 0;
-        color = 0;
-        contentView = null;
-        animationType = AnimationType.FROM_MASTER_VIEW;
+        mText = null;
+        mTypeface = null;
+        mTextResId = 0;
+        mColor = 0;
+        mContentView = null;
+        mAnimationType = AnimationType.FROM_MASTER_VIEW;
     }
 
     /**
@@ -52,9 +52,9 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withText(CharSequence text) {
-        this.text = text;
-        this.textResId = 0;
+    public ToolTip withText(final CharSequence text) {
+        mText = text;
+        mTextResId = 0;
         return this;
     }
 
@@ -63,9 +63,9 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withText(int resId) {
-        this.textResId = resId;
-        this.text = null;
+    public ToolTip withText(final int resId) {
+        mTextResId = resId;
+        mText = null;
         return this;
     }
 
@@ -74,10 +74,10 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withText(int resId, Typeface tf) {
-        this.textResId = resId;
-        this.text = null;
-        this.withTypeface(tf);
+    public ToolTip withText(final int resId, final Typeface tf) {
+        mTextResId = resId;
+        mText = null;
+        withTypeface(tf);
         return this;
     }
 
@@ -86,8 +86,8 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withColor(int color) {
-        this.color = color;
+    public ToolTip withColor(final int color) {
+        mColor = color;
         return this;
     }
 
@@ -96,8 +96,8 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withTextColor(int color){
-        this.textColor = color;
+    public ToolTip withTextColor(final int color) {
+        mTextColor = color;
         return this;
     }
 
@@ -106,8 +106,8 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withContentView(View view) {
-        this.contentView = view;
+    public ToolTip withContentView(final View view) {
+        mContentView = view;
         return this;
     }
 
@@ -116,60 +116,70 @@ public class ToolTip {
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withAnimationType(AnimationType animationType) {
-        this.animationType = animationType;
+    public ToolTip withAnimationType(final AnimationType animationType) {
+        mAnimationType = animationType;
         return this;
     }
 
     /**
-     * Set whether to show a shadow below the ToolTip.
+     * Set to show a shadow below the ToolTip.
      *
      * @return this ToolTip to build upon.
      */
-    public ToolTip withShadow(boolean shadow) {
-        this.shadow = shadow;
+    public ToolTip withShadow() {
+        mShouldShowShadow = true;
+        return this;
+    }
+
+    /**
+     * Set to NOT show a shadow below the ToolTip.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withoutShadow() {
+        mShouldShowShadow = false;
         return this;
     }
 
     /**
      * @param typeface the typeface to set
      */
-    public void withTypeface(Typeface typeface) {
-        this.typeface = typeface;
+    public void withTypeface(final Typeface typeface) {
+        mTypeface = typeface;
     }
 
     public CharSequence getText() {
-        return text;
+        return mText;
     }
 
     public int getTextResId() {
-        return textResId;
+        return mTextResId;
     }
 
     public int getColor() {
-        return color;
+        return mColor;
     }
 
     public int getTextColor() {
-        return textColor;
+        return mTextColor;
     }
 
     public View getContentView() {
-        return contentView;
+        return mContentView;
     }
 
     public AnimationType getAnimationType() {
-        return animationType;
+        return mAnimationType;
     }
 
-    public boolean getShadow() {
-        return shadow;
+    public boolean shouldShowShadow() {
+        return mShouldShowShadow;
     }
 
     /**
      * @return the typeface
      */
     public Typeface getTypeface() {
-        return typeface;
+        return mTypeface;
     }
 }
