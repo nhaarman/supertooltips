@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
         ToolTip toolTip = new ToolTip()
                 .withText("A beautiful Button")
                 .withColor(getResources().getColor(R.color.holo_red))
-                .withShadow(true);
+                .withShadow();
 
         mRedToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
         mRedToolTipView.setOnToolTipViewClickedListener(this);
