@@ -7,7 +7,7 @@ env:
   global:
     - TERM=dumb
     - secure: A5Bq4mDhsHqKK8PlxNlxVGJuSBi1L2uBg817821AOXyPjSSXS5GQK+4bIp+io8R/bPzxCNuC8nqJUvupa0GrEgKhzfA0JF5nhMjLyZ5cfpbNOYWCJHlbiZCDkW4MFhtWTCGedu3sQ8WifyJ25ceh+1nxxAn/hIhJUfYssNw1+8Q=
-	
+
 before_install:
   # Install base Android SDK
   - sudo apt-get update -qq
