@@ -102,7 +102,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
         layoutParams.width = mWidth;
         setLayoutParams(layoutParams);
-
+        if (getParent() == null) {
+            return false;
+        }
         if (mToolTip != null) {
             applyToolTipPosition();
         }
@@ -152,7 +154,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mView.getWindowVisibleDisplayFrame(viewDisplayFrame);
 
         final int[] parentViewScreenPosition = new int[2];
-        ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
+        if (getParent() != null) {
+            ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
+        }
 
         final int masterViewWidth = mView.getWidth();
         final int masterViewHeight = mView.getHeight();
