@@ -1,5 +1,8 @@
-SuperToolTips ([Play Store Demo][1]) [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
+SuperToolTips (Abandoned)
 ===========
+[Play Store Demo][1] [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
+
+*This project has been abandoned. Feel free to fork this project, though no support will be given.*
 
 SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views.
 Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
