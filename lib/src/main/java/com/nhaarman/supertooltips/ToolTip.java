@@ -34,6 +34,7 @@ public class ToolTip {
     private AnimationType mAnimationType;
     private boolean mShouldShowShadow;
     private Typeface mTypeface;
+    private int mOverlap;
 
     /**
      * Creates a new ToolTip without any values.
@@ -142,6 +143,16 @@ public class ToolTip {
     }
 
     /**
+     * Set the number of dps for which the ToolTip overlaps the anchored View.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withOverlap(final int overlap) {
+        mOverlap = overlap;
+        return this;
+    }
+
+    /**
      * @param typeface the typeface to set
      */
     public void withTypeface(final Typeface typeface) {
@@ -181,5 +192,9 @@ public class ToolTip {
      */
     public Typeface getTypeface() {
         return mTypeface;
+    }
+
+    public int getOverlap() {
+        return mOverlap;
     }
 }

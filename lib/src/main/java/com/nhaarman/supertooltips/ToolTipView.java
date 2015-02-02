@@ -17,9 +17,11 @@ package com.nhaarman.supertooltips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -183,11 +185,16 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
 
         int toolTipViewY;
+
+        Resources r = getResources();
+        int overlapInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mToolTip.getOverlap(), r.getDisplayMetrics());
+
         if (showBelow) {
-            toolTipViewY = toolTipViewBelowY;
+            toolTipViewY = toolTipViewBelowY - overlapInPixels;
         } else {
-            toolTipViewY = toolTipViewAboveY;
+            toolTipViewY = toolTipViewAboveY + overlapInPixels;
         }
+        setY(toolTipViewY);
 
         if (mToolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             ViewHelper.setTranslationY(this, toolTipViewY);
