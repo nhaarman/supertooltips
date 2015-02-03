@@ -35,6 +35,8 @@ public class ToolTip {
     private boolean mShouldShowShadow;
     private Typeface mTypeface;
     private int mOverlap;
+    private int mStartMargin;
+    private int mEndMargin;
 
     /**
      * Creates a new ToolTip without any values.
@@ -46,6 +48,9 @@ public class ToolTip {
         mColor = 0;
         mContentView = null;
         mAnimationType = AnimationType.FROM_MASTER_VIEW;
+        mOverlap = 0;
+        mStartMargin = 0;
+        mEndMargin = 0;
     }
 
     /**
@@ -153,6 +158,27 @@ public class ToolTip {
     }
 
     /**
+     * Set the horizontal margin in dps for the ToolTip
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withHorizontalMargins(final int startMargin, final int endMargin) {
+        mStartMargin = startMargin;
+        mEndMargin = endMargin;
+        return this;
+    }
+
+    /**
+     * Set the horizontal margin in dps for the ToolTip
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withHorizontalMargins(final int margin) {
+        withHorizontalMargins(margin, margin);
+        return this;
+    }
+
+    /**
      * @param typeface the typeface to set
      */
     public void withTypeface(final Typeface typeface) {
@@ -196,5 +222,13 @@ public class ToolTip {
 
     public int getOverlap() {
         return mOverlap;
+    }
+
+    public int getStartMargin() {
+        return mStartMargin;
+    }
+
+    public int getEndMargin() {
+        return mEndMargin;
     }
 }
