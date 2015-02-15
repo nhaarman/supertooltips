@@ -1,4 +1,4 @@
-SuperToolTips (Abandoned)
+SuperToolTips (Discontinued)
 ===========
 [Play Store Demo][1] [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
 
