@@ -57,7 +57,7 @@ protected void onCreate(Bundle savedInstanceState) {
 	                    .withText("A beautiful View")
 	                    .withColor(Color.RED)
 	                    .withShadow()
-						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP);
+						.withAnimationType(ToolTip.AnimationType.FROM_TOP);
 	myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
 	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
 }
@@ -68,11 +68,11 @@ ToolTip customization
 -----
 You can customize the `ToolTip` in several ways:
 
-* Specify a content text using `ToolTip.setText()`.
-* Set a color using `ToolTip.setColor()`.
-* Specify whether to show a shadow or not with `ToolTip.setShadow()`.
-* Specify how to animate the ToolTip: from the view itself or from the top, using `ToolTip.setAnimationType()`.
-* Set your own custom content View using `ToolTip.setContentView()`.
+* Specify a content text using `ToolTip.withText()`.
+* Set a color using `ToolTip.withColor()`.
+* Specify whether to show a shadow or not with `ToolTip.withShadow()`.
+* Specify how to animate the ToolTip: from the view itself or from the top, using `ToolTip.withAnimationType()`.
+* Set your own custom content View using `ToolTip.withContentView()`.
 
 See the examples.
 
