@@ -182,14 +182,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
 
         final int masterViewWidth = mView.getWidth();
-        final int masterViewHeight = mView.getHeight();
 
         mRelativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
         mRelativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
         final int relativeMasterViewCenterX = mRelativeMasterViewX + masterViewWidth / 2;
-
-        int toolTipViewAboveY = mRelativeMasterViewY - getHeight();
-        int toolTipViewBelowY = Math.max(0, mRelativeMasterViewY + masterViewHeight);
 
         int toolTipViewX = Math.max(0, relativeMasterViewCenterX - mWidth / 2);
         if (toolTipViewX + mWidth > viewDisplayFrame.right) {
@@ -199,16 +195,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setX(toolTipViewX);
         setPointerCenterX(relativeMasterViewCenterX);
 
-        final boolean showBelow = toolTipViewAboveY < 0;
-
         setToolTipPointer(mToolTip.getPointerState());
 
-        int toolTipViewY;
-        if (showBelow) {
-            toolTipViewY = toolTipViewBelowY;
-        } else {
-            toolTipViewY = toolTipViewAboveY;
-        }
+        int toolTipViewY = mRelativeMasterViewY;
 
         if (mToolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             ViewHelper.setTranslationY(this, toolTipViewY);
