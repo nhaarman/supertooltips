@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +110,28 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         return true;
     }
 
+    private void setToolTipPointer(ToolTip.PointerState state) {
+        float alphaTop = 0, alphaBot  = 0;
+        int visibilityTop = GONE, visibilityBot = GONE;
+        switch (state) {
+            case UP:
+                alphaTop = 1;
+                visibilityTop = VISIBLE;
+                break;
+            case DOWN:
+                alphaBot = 1;
+                visibilityBot = VISIBLE;
+                break;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            ViewHelper.setAlpha(mTopPointerView, alphaTop);
+            ViewHelper.setAlpha(mBottomPointerView, alphaBot);
+        } else {
+            mTopPointerView.setVisibility(visibilityTop);
+            mBottomPointerView.setVisibility(visibilityBot);
+        }
+    }
+
     public void setToolTip(final ToolTip toolTip, final View view) {
         mToolTip = toolTip;
         mView = view;
@@ -129,6 +152,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         if (mToolTip.getColor() != 0) {
             setColor(mToolTip.getColor());
+        }
+
+        if (mToolTip.getPointerState() != null) {
+            setToolTipPointer(mToolTip.getPointerState());
         }
 
         if (mToolTip.getContentView() != null) {
@@ -174,13 +201,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         final boolean showBelow = toolTipViewAboveY < 0;
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            ViewHelper.setAlpha(mTopPointerView, showBelow ? 1 : 0);
-            ViewHelper.setAlpha(mBottomPointerView, showBelow ? 0 : 1);
-        } else {
-            mTopPointerView.setVisibility(showBelow ? VISIBLE : GONE);
-            mBottomPointerView.setVisibility(showBelow ? GONE : VISIBLE);
-        }
+        setToolTipPointer(mToolTip.getPointerState());
 
         int toolTipViewY;
         if (showBelow) {
