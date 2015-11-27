@@ -21,6 +21,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mTopFrame = findViewById(R.id.tooltip_topframe);
         mContentHolder = (ViewGroup) findViewById(R.id.tooltip_contentholder);
         mToolTipTV = (TextView) findViewById(R.id.tooltip_contenttv);
+        mToolTipTV.setGravity(Gravity.CENTER);
         mBottomFrame = findViewById(R.id.tooltip_bottomframe);
         mBottomPointerView = (ImageView) findViewById(R.id.tooltip_pointer_down);
         mShadowView = findViewById(R.id.tooltip_shadow);
