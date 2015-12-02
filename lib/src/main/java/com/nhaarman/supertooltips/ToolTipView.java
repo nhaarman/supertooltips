@@ -60,6 +60,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private View mBottomFrame;
     private ImageView mBottomPointerView;
     private View mShadowView;
+    private ImageView mLeftPointerView;
+    private ImageView mRightPointerView;
+    private int mMasterViewWidth;
 
     private ToolTip mToolTip;
     private View mView;
@@ -90,9 +93,15 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mBottomFrame = findViewById(R.id.tooltip_bottomframe);
         mBottomPointerView = (ImageView) findViewById(R.id.tooltip_pointer_down);
         mShadowView = findViewById(R.id.tooltip_shadow);
+        mLeftPointerView = (ImageView) findViewById(R.id.tooltip_pointer_left);
+        mRightPointerView = (ImageView) findViewById(R.id.tooltip_pointer_right);
 
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
+    }
+
+    public int getUsedWidth() {
+        return mMasterViewWidth;
     }
 
     @Override
@@ -113,8 +122,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     private void setToolTipPointer(ToolTip.PointerState state) {
-        float alphaTop = 0, alphaBot  = 0;
-        int visibilityTop = GONE, visibilityBot = GONE;
+        float alphaTop = 0, alphaBot = 0, alphaLeft = 0, alphaRight = 0;
+        int visibilityTop = GONE, visibilityBot = GONE, visibilityLeft = GONE, visibilityRight = GONE;
         switch (state) {
             case UP:
                 alphaTop = 1;
@@ -124,13 +133,26 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 alphaBot = 1;
                 visibilityBot = VISIBLE;
                 break;
+            case LEFT:
+                alphaLeft = 1;
+                visibilityLeft = VISIBLE;
+                break;
+            case RIGHT:
+                alphaRight = 1;
+                visibilityRight = VISIBLE;
+                break;
+
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             ViewHelper.setAlpha(mTopPointerView, alphaTop);
             ViewHelper.setAlpha(mBottomPointerView, alphaBot);
+            ViewHelper.setAlpha(mLeftPointerView, alphaLeft);
+            ViewHelper.setAlpha(mRightPointerView, alphaRight);
         } else {
             mTopPointerView.setVisibility(visibilityTop);
             mBottomPointerView.setVisibility(visibilityBot);
+            mLeftPointerView.setVisibility(visibilityLeft);
+            mRightPointerView.setVisibility(visibilityRight);
         }
     }
 
@@ -183,11 +205,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         final int[] parentViewScreenPosition = new int[2];
         ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
 
-        final int masterViewWidth = mView.getWidth();
+        mMasterViewWidth = mView.getWidth();
 
         mRelativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
         mRelativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
-        final int relativeMasterViewCenterX = mRelativeMasterViewX + masterViewWidth / 2;
+        final int relativeMasterViewCenterX = mRelativeMasterViewX + mMasterViewWidth / 2;
 
         int toolTipViewX = Math.max(0, relativeMasterViewCenterX - mWidth / 2);
         if (toolTipViewX + mWidth > viewDisplayFrame.right) {
@@ -235,6 +257,15 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         ViewHelper.setX(mTopPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
         ViewHelper.setX(mBottomPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
+    }
+
+    public void setHorizontalPointerPos(final int pos) {
+        ViewHelper.setX(mLeftPointerView, pos);
+        ViewHelper.setX(mRightPointerView, pos);
+    }
+
+    public int getHorizontalPointerWidth() {
+        return mLeftPointerView.getMeasuredWidth();
     }
 
     public void setOnToolTipViewClickedListener(final OnToolTipViewClickedListener listener) {

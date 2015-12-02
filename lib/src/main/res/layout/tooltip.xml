@@ -3,7 +3,8 @@
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clipChildren="false">
 
     <FrameLayout
         android:id="@+id/tooltip_topframe"
@@ -34,6 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/tooltip_pointer_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tooltip_arrow_left"
+        android:layout_below="@id/tooltip_topframe"/>
+
+    <ImageView
+        android:id="@+id/tooltip_pointer_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tooltip_arrow_right"
+        android:layout_below="@id/tooltip_topframe"/>
 
     <View
         android:id="@+id/tooltip_shadow"
