@@ -17,10 +17,10 @@ package com.nhaarman.supertooltips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +62,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private View mShadowView;
     private ImageView mLeftPointerView;
     private ImageView mRightPointerView;
+    private RelativeLayout mRoot;
     private int mMasterViewWidth;
+    private Callback mCallback;
 
     private ToolTip mToolTip;
     private View mView;
@@ -85,6 +87,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.tooltip, this, true);
 
+        mRoot = (RelativeLayout) findViewById(R.id.tooltip_root);
         mTopPointerView = (ImageView) findViewById(R.id.tooltip_pointer_up);
         mTopFrame = findViewById(R.id.tooltip_topframe);
         mContentHolder = (ViewGroup) findViewById(R.id.tooltip_contentholder);
@@ -95,13 +98,18 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mShadowView = findViewById(R.id.tooltip_shadow);
         mLeftPointerView = (ImageView) findViewById(R.id.tooltip_pointer_left);
         mRightPointerView = (ImageView) findViewById(R.id.tooltip_pointer_right);
+        setWillNotDraw(false);
 
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
     }
 
-    public int getUsedWidth() {
-        return mMasterViewWidth;
+    public interface Callback {
+        void onDraw(int width);
+    }
+
+    public void onDrawCallback(Callback callback) {
+        mCallback = callback;
     }
 
     @Override
@@ -121,6 +129,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         return true;
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (mCallback != null) {
+            mCallback.onDraw(getWidth());
+        }
+    }
+
     private void setToolTipPointer(ToolTip.PointerState state) {
         float alphaTop = 0, alphaBot = 0, alphaLeft = 0, alphaRight = 0;
         int visibilityTop = GONE, visibilityBot = GONE, visibilityLeft = GONE, visibilityRight = GONE;
@@ -136,10 +152,12 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             case LEFT:
                 alphaLeft = 1;
                 visibilityLeft = VISIBLE;
+                mRoot.setPadding(mLeftPointerView.getMeasuredWidth(),0,0,0);
                 break;
             case RIGHT:
                 alphaRight = 1;
                 visibilityRight = VISIBLE;
+                mRoot.setPadding(0,0,mRightPointerView.getMeasuredWidth(),0);
                 break;
 
         }
@@ -259,13 +277,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         ViewHelper.setX(mBottomPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
     }
 
-    public void setHorizontalPointerPos(final int pos) {
-        ViewHelper.setX(mLeftPointerView, pos);
-        ViewHelper.setX(mRightPointerView, pos);
+    public void setHorizontalPointerX(final int x) {
+        ViewHelper.setX(mLeftPointerView, x);
+        ViewHelper.setX(mRightPointerView, x);
     }
 
-    public int getHorizontalPointerWidth() {
-        return mLeftPointerView.getMeasuredWidth();
+    public void setHorizontalPointerY(final int y) {
+        ViewHelper.setY(mLeftPointerView, y);
+        ViewHelper.setY(mRightPointerView, y);
     }
 
     public void setOnToolTipViewClickedListener(final OnToolTipViewClickedListener listener) {
