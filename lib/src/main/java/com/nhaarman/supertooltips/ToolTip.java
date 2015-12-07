@@ -26,7 +26,7 @@ public class ToolTip {
         NONE
     }
 
-    public enum PointerState {UP, DOWN, NONE}
+    public enum PointerState {UP, DOWN, LEFT, RIGHT, NONE}
 
     private CharSequence mText;
     private int mTextResId;
