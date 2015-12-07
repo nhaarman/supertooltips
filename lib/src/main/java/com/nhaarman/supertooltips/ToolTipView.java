@@ -277,8 +277,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         ViewHelper.setX(mBottomPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
     }
 
-    public void setHorizontalPointerX(final int x) {
-        ViewHelper.setX(mLeftPointerView, x);
+    public void setRightHorizontalPointerX(final int x) {
+        ViewHelper.setX(mLeftPointerView, 0);
         ViewHelper.setX(mRightPointerView, x);
     }
 
