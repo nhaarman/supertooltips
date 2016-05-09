@@ -1,1 +1,2 @@
-include ':lib', ':app'
+// removing this allows parent android project to build with gradle 2.1
+//include ':lib', ':app'

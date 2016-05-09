@@ -5,7 +5,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.+'
+        // removing this allows parent android project to build with gradle 2.1
+        //classpath 'com.android.tools.build:gradle:1.0.+'
     }
 }
 
