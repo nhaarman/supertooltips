@@ -26,12 +26,15 @@ public class ToolTip {
         NONE
     }
 
+    public enum PointerState {UP, DOWN, LEFT, RIGHT, NONE}
+
     private CharSequence mText;
     private int mTextResId;
     private int mColor;
     private int mTextColor;
     private View mContentView;
     private AnimationType mAnimationType;
+    private PointerState mPointerState;
     private boolean mShouldShowShadow;
     private Typeface mTypeface;
 
@@ -56,6 +59,15 @@ public class ToolTip {
         mText = text;
         mTextResId = 0;
         return this;
+    }
+
+    public ToolTip withPointerState(final PointerState state) {
+        mPointerState = state;
+        return this;
+    }
+
+    public PointerState getPointerState() {
+        return mPointerState;
     }
 
     /**
