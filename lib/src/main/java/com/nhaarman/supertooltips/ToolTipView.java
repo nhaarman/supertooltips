@@ -21,7 +21,6 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +53,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public static final String ALPHA_COMPAT = "alpha";
 
     private ImageView mTopPointerView;
-    private View mTopFrame;
+//    private View mTopFrame;
     private ViewGroup mContentHolder;
     private TextView mToolTipTV;
-    private View mBottomFrame;
+//    private View mBottomFrame;
     private ImageView mBottomPointerView;
     private View mShadowView;
     private ImageView mLeftPointerView;
@@ -89,11 +88,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         mRoot = (RelativeLayout) findViewById(R.id.tooltip_root);
         mTopPointerView = (ImageView) findViewById(R.id.tooltip_pointer_up);
-        mTopFrame = findViewById(R.id.tooltip_topframe);
+//        mTopFrame = findViewById(R.id.tooltip_topframe);
         mContentHolder = (ViewGroup) findViewById(R.id.tooltip_contentholder);
         mToolTipTV = (TextView) findViewById(R.id.tooltip_contenttv);
-        mToolTipTV.setGravity(Gravity.CENTER);
-        mBottomFrame = findViewById(R.id.tooltip_bottomframe);
+//        mBottomFrame = findViewById(R.id.tooltip_bottomframe);
         mBottomPointerView = (ImageView) findViewById(R.id.tooltip_pointer_down);
         mShadowView = findViewById(R.id.tooltip_shadow);
         mLeftPointerView = (ImageView) findViewById(R.id.tooltip_pointer_left);
@@ -293,10 +291,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public void setColor(final int color) {
         mTopPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+//        mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         mBottomPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mBottomFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mContentHolder.setBackgroundColor(color);
+//        mBottomFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+//        mContentHolder.setBackgroundColor(color);
     }
 
     private void setContentView(final View view) {
