@@ -17,6 +17,7 @@ package com.nhaarman.supertooltips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
@@ -52,12 +53,17 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public static final String ALPHA_COMPAT = "alpha";
 
     private ImageView mTopPointerView;
-    private View mTopFrame;
+//    private View mTopFrame;
     private ViewGroup mContentHolder;
     private TextView mToolTipTV;
-    private View mBottomFrame;
+//    private View mBottomFrame;
     private ImageView mBottomPointerView;
     private View mShadowView;
+    private ImageView mLeftPointerView;
+    private ImageView mRightPointerView;
+    private RelativeLayout mRoot;
+    private int mMasterViewWidth;
+    private Callback mCallback;
 
     private ToolTip mToolTip;
     private View mView;
@@ -80,16 +86,28 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.tooltip, this, true);
 
+        mRoot = (RelativeLayout) findViewById(R.id.tooltip_root);
         mTopPointerView = (ImageView) findViewById(R.id.tooltip_pointer_up);
-        mTopFrame = findViewById(R.id.tooltip_topframe);
+//        mTopFrame = findViewById(R.id.tooltip_topframe);
         mContentHolder = (ViewGroup) findViewById(R.id.tooltip_contentholder);
         mToolTipTV = (TextView) findViewById(R.id.tooltip_contenttv);
-        mBottomFrame = findViewById(R.id.tooltip_bottomframe);
+//        mBottomFrame = findViewById(R.id.tooltip_bottomframe);
         mBottomPointerView = (ImageView) findViewById(R.id.tooltip_pointer_down);
         mShadowView = findViewById(R.id.tooltip_shadow);
+        mLeftPointerView = (ImageView) findViewById(R.id.tooltip_pointer_left);
+        mRightPointerView = (ImageView) findViewById(R.id.tooltip_pointer_right);
+        setWillNotDraw(false);
 
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
+    }
+
+    public interface Callback {
+        void onDraw(int width);
+    }
+
+    public void onDrawCallback(Callback callback) {
+        mCallback = callback;
     }
 
     @Override
@@ -103,10 +121,55 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         layoutParams.width = mWidth;
         setLayoutParams(layoutParams);
 
-        if (mToolTip != null) {
+        if (mToolTip != null && mView != null) {
             applyToolTipPosition();
-        }
+        } // else, position will be set when setToolTip() is called
         return true;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (mCallback != null) {
+            mCallback.onDraw(getWidth());
+        }
+    }
+
+    private void setToolTipPointer(ToolTip.PointerState state) {
+        float alphaTop = 0, alphaBot = 0, alphaLeft = 0, alphaRight = 0;
+        int visibilityTop = GONE, visibilityBot = GONE, visibilityLeft = GONE, visibilityRight = GONE;
+        switch (state) {
+            case UP:
+                alphaTop = 1;
+                visibilityTop = VISIBLE;
+                break;
+            case DOWN:
+                alphaBot = 1;
+                visibilityBot = VISIBLE;
+                break;
+            case LEFT:
+                alphaLeft = 1;
+                visibilityLeft = VISIBLE;
+                mRoot.setPadding(mLeftPointerView.getMeasuredWidth(),0,0,0);
+                break;
+            case RIGHT:
+                alphaRight = 1;
+                visibilityRight = VISIBLE;
+                mRoot.setPadding(0,0,mRightPointerView.getMeasuredWidth(),0);
+                break;
+
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            ViewHelper.setAlpha(mTopPointerView, alphaTop);
+            ViewHelper.setAlpha(mBottomPointerView, alphaBot);
+            ViewHelper.setAlpha(mLeftPointerView, alphaLeft);
+            ViewHelper.setAlpha(mRightPointerView, alphaRight);
+        } else {
+            mTopPointerView.setVisibility(visibilityTop);
+            mBottomPointerView.setVisibility(visibilityBot);
+            mLeftPointerView.setVisibility(visibilityLeft);
+            mRightPointerView.setVisibility(visibilityRight);
+        }
     }
 
     public void setToolTip(final ToolTip toolTip, final View view) {
@@ -129,6 +192,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         if (mToolTip.getColor() != 0) {
             setColor(mToolTip.getColor());
+        }
+
+        if (mToolTip.getPointerState() != null) {
+            setToolTipPointer(mToolTip.getPointerState());
         }
 
         if (mToolTip.getContentView() != null) {
@@ -154,15 +221,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         final int[] parentViewScreenPosition = new int[2];
         ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
 
-        final int masterViewWidth = mView.getWidth();
-        final int masterViewHeight = mView.getHeight();
+        mMasterViewWidth = mView.getWidth();
 
         mRelativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
         mRelativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
-        final int relativeMasterViewCenterX = mRelativeMasterViewX + masterViewWidth / 2;
-
-        int toolTipViewAboveY = mRelativeMasterViewY - getHeight();
-        int toolTipViewBelowY = Math.max(0, mRelativeMasterViewY + masterViewHeight);
+        final int relativeMasterViewCenterX = mRelativeMasterViewX + mMasterViewWidth / 2;
 
         int toolTipViewX = Math.max(0, relativeMasterViewCenterX - mWidth / 2);
         if (toolTipViewX + mWidth > viewDisplayFrame.right) {
@@ -172,22 +235,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setX(toolTipViewX);
         setPointerCenterX(relativeMasterViewCenterX);
 
-        final boolean showBelow = toolTipViewAboveY < 0;
+        setToolTipPointer(mToolTip.getPointerState());
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            ViewHelper.setAlpha(mTopPointerView, showBelow ? 1 : 0);
-            ViewHelper.setAlpha(mBottomPointerView, showBelow ? 0 : 1);
-        } else {
-            mTopPointerView.setVisibility(showBelow ? VISIBLE : GONE);
-            mBottomPointerView.setVisibility(showBelow ? GONE : VISIBLE);
-        }
-
-        int toolTipViewY;
-        if (showBelow) {
-            toolTipViewY = toolTipViewBelowY;
-        } else {
-            toolTipViewY = toolTipViewAboveY;
-        }
+        int toolTipViewY = mRelativeMasterViewY;
 
         if (mToolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             ViewHelper.setTranslationY(this, toolTipViewY);
@@ -225,16 +275,26 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         ViewHelper.setX(mBottomPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
     }
 
+    public void setRightHorizontalPointerX(final int x) {
+        ViewHelper.setX(mLeftPointerView, 0);
+        ViewHelper.setX(mRightPointerView, x);
+    }
+
+    public void setHorizontalPointerY(final int y) {
+        ViewHelper.setY(mLeftPointerView, y);
+        ViewHelper.setY(mRightPointerView, y);
+    }
+
     public void setOnToolTipViewClickedListener(final OnToolTipViewClickedListener listener) {
         mListener = listener;
     }
 
     public void setColor(final int color) {
         mTopPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+//        mTopFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         mBottomPointerView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mBottomFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        mContentHolder.setBackgroundColor(color);
+//        mBottomFrame.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+//        mContentHolder.setBackgroundColor(color);
     }
 
     private void setContentView(final View view) {
