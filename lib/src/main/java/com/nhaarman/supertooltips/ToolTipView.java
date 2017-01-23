@@ -17,14 +17,17 @@ package com.nhaarman.supertooltips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -70,6 +73,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     private OnToolTipViewClickedListener mListener;
 
+    private Resources mResources;
+
     public ToolTipView(final Context context) {
         super(context);
         init();
@@ -88,6 +93,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         mBottomPointerView = (ImageView) findViewById(R.id.tooltip_pointer_down);
         mShadowView = findViewById(R.id.tooltip_shadow);
 
+        mResources = getResources();
+
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
     }
@@ -96,12 +103,6 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public boolean onPreDraw() {
         getViewTreeObserver().removeOnPreDrawListener(this);
         mDimensionsKnown = true;
-
-        mWidth = mContentHolder.getWidth();
-
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
-        layoutParams.width = mWidth;
-        setLayoutParams(layoutParams);
 
         if (mToolTip != null) {
             applyToolTipPosition();
@@ -144,7 +145,19 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
     }
 
+    private int dpsToPixels(int dps) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dps, mResources.getDisplayMetrics());
+    }
+
     private void applyToolTipPosition() {
+        mWidth = mContentHolder.getWidth();
+
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
+        layoutParams.leftMargin = dpsToPixels(mToolTip.getStartMargin());
+        layoutParams.rightMargin = dpsToPixels(mToolTip.getEndMargin());
+        layoutParams.width = mWidth;
+        setLayoutParams(layoutParams);
+
         final int[] masterViewScreenPosition = new int[2];
         mView.getLocationOnScreen(masterViewScreenPosition);
 
@@ -183,11 +196,15 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
 
         int toolTipViewY;
+
+        int overlapInPixels = dpsToPixels(mToolTip.getOverlap());
+
         if (showBelow) {
-            toolTipViewY = toolTipViewBelowY;
+            toolTipViewY = toolTipViewBelowY - overlapInPixels;
         } else {
-            toolTipViewY = toolTipViewAboveY;
+            toolTipViewY = toolTipViewAboveY + overlapInPixels;
         }
+        setY(toolTipViewY);
 
         if (mToolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             ViewHelper.setTranslationY(this, toolTipViewY);
